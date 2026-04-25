@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1A3A46" />
+<title>İdea İnşaat — Xəyalınızı reallığa çeviririk</title>
+<meta name="description" content="Bakıda 2026-cı ildən açar təhvil tikinti, interyer dizayn, mebel və landşaft xidmətləri." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          petrol: { DEFAULT: '#275161', deep: '#1A3A46', soft: '#3A6775' },
+          sage:   { DEFAULT: '#5F7779', soft: '#7E9294', warm: '#4B6365' },
+          cream:  { DEFAULT: '#F5F1EA', soft: '#FAF7F2', warm: '#ECE6DB' },
+          copper: { DEFAULT: '#B47548', soft: '#C89A7A', deep: '#8F5A3B' },
+          ink:    '#142024',
+          muted:  '#6B7280'
+        },
+        fontFamily: {
+          serif: ['Playfair Display', 'Georgia', 'serif'],
+          sans:  ['Inter', 'system-ui', 'sans-serif']
+        },
+        borderRadius: {
+          '4xl': '2rem',
+          '5xl': '2.5rem'
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #F5F1EA;
+    color: #142024;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .font-display { font-family: 'Playfair Display', Georgia, serif; }
+  .italic-display { font-style: italic; font-family: 'Playfair Display', Georgia, serif; }
+
+  .app-frame { background: #F5F1EA; }
+  .app-surface { background: #F5F1EA; }
+
+  /* Navbar — always on cream surface with subtle blur */
+  #siteNav {
+    background: rgba(245, 241, 234, 0.72);
+    backdrop-filter: saturate(1.3) blur(14px);
+    -webkit-backdrop-filter: saturate(1.3) blur(14px);
+    transition: box-shadow .4s ease, background .4s ease;
+  }
+  #siteNav.is-scrolled {
+    background: rgba(245, 241, 234, 0.92);
+    box-shadow: 0 1px 0 rgba(20,32,36,.06), 0 10px 40px -20px rgba(20,32,36,.15);
+  }
+
+  /* Hero dual-tone headline */
+  .hl-ghost { color: rgba(20,32,36,0.22); }
+
+  /* Hero service pills */
+  .pill-svc {
+    display: inline-flex; align-items: center; gap: .45rem;
+    padding: .6rem 1rem; border-radius: 9999px;
+    background: #ECE6DB; color: #142024;
+    border: 1px solid rgba(20,32,36,0.06);
+    font-size: 13px; font-weight: 500;
+    transition: all .25s ease;
+    white-space: nowrap;
+  }
+  .pill-svc:hover { background: #fff; border-color: rgba(39,81,97,.25); }
+  .pill-svc.is-active {
+    background: #275161; color: #F5F1EA; border-color: #275161;
+  }
+
+  /* Soft shadow for stats card */
+  .card-float {
+    box-shadow:
+      0 1px 2px rgba(20,32,36,.04),
+      0 12px 24px -12px rgba(20,32,36,.12),
+      0 30px 60px -30px rgba(20,32,36,.18);
+  }
+
+  /* Concave notch — panels that appear to be carved INTO the image.
+     The panel has a rounded rectangle. At its outer corner (where it meets the image),
+     a pseudo-element creates a concave curve using a radial-gradient mask. */
+  .notch { position: relative; }
+  /* Notch at TOP-RIGHT — for panels whose top-right corner dips into the image */
+  .notch-tr::after {
+    content: ""; position: absolute;
+    top: 0; right: -28px; width: 28px; height: 28px;
+    background: radial-gradient(circle at 100% 100%, transparent 28px, #F5F1EA 28.5px);
+    pointer-events: none;
+  }
+  /* Notch at BOTTOM-RIGHT */
+  .notch-br::after {
+    content: ""; position: absolute;
+    bottom: 0; right: -28px; width: 28px; height: 28px;
+    background: radial-gradient(circle at 100% 0%, transparent 28px, #F5F1EA 28.5px);
+    pointer-events: none;
+  }
+  /* Notch at BOTTOM-LEFT */
+  .notch-bl::after {
+    content: ""; position: absolute;
+    bottom: 0; left: -28px; width: 28px; height: 28px;
+    background: radial-gradient(circle at 0% 0%, transparent 28px, #F5F1EA 28.5px);
+    pointer-events: none;
+  }
+  /* Notch at TOP-LEFT */
+  .notch-tl::after {
+    content: ""; position: absolute;
+    top: 0; left: -28px; width: 28px; height: 28px;
+    background: radial-gradient(circle at 0% 100%, transparent 28px, #F5F1EA 28.5px);
+    pointer-events: none;
+  }
+
+  /* Hero image wrapper — big rounded mask */
+  .hero-img-wrap {
+    border-radius: 32px;
+  }
+  @media (min-width: 768px) {
+    .hero-img-wrap { border-radius: 42px; }
+  }
+
+  /* Hide scrollbar on horizontal scrollers */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+
+  /* Snap scroll for service cards */
+  .snap-x-mandatory { scroll-snap-type: x mandatory; }
+  .snap-start { scroll-snap-align: start; }
+
+  /* Subtle image grain */
+  .grain::after {
+    content: ""; position: absolute; inset: 0;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.25 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+    opacity: .08; mix-blend-mode: overlay; pointer-events: none;
+  }
+
+  /* Fancy link underline */
+  .link-anim {
+    position: relative;
+    display: inline-flex; align-items: center; gap: .5rem;
+  }
+  .link-anim::after {
+    content: ""; position: absolute; left: 0; bottom: -4px; height: 1px;
+    width: 100%; background: currentColor; transform-origin: right;
+    transform: scaleX(1); transition: transform .4s ease;
+  }
+  .link-anim:hover::after { transform-origin: left; transform: scaleX(.5); }
+
+  /* Reveal on scroll */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .9s ease, transform .9s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* Button hover */
+  .btn-copper { transition: all .25s ease; }
+  .btn-copper:hover { background: #8F5A3B; transform: translateY(-1px); }
+  .btn-ghost { transition: all .25s ease; }
+  .btn-ghost:hover { background: #0F1419; color: #F5F1EA; }
+
+  /* Sticky mobile CTA */
+  .sticky-cta {
+    position: fixed; bottom: 16px; left: 16px; right: 16px; z-index: 50;
+    display: flex; gap: 10px;
+  }
+  @media (min-width: 768px) { .sticky-cta { display: none; } }
+
+  /* Process step line */
+  .proc-line {
+    background: repeating-linear-gradient(90deg, #B47548 0 6px, transparent 6px 12px);
+  }
+
+  /* Marquee (for "trusted by" strip) */
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-track { display: flex; width: max-content; animation: marquee 30s linear infinite; }
+
+  /* Project card hover */
+  .proj-card { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
+  .proj-card:hover { transform: translateY(-4px); }
+  .proj-card img { transition: transform .8s ease; }
+  .proj-card:hover img { transform: scale(1.04); }
+
+  /* Custom cursor ring on desktop only */
+  @media (min-width: 1024px) {
+    .custom-cursor {
+      position: fixed; pointer-events: none; z-index: 999;
+      width: 28px; height: 28px; border: 1.5px solid #B47548;
+      border-radius: 50%; transform: translate(-50%, -50%);
+      transition: width .2s ease, height .2s ease, opacity .2s ease;
+      mix-blend-mode: difference;
+    }
+    .custom-cursor.big { width: 64px; height: 64px; }
+  }
+
+  /* Fullscreen nav */
+  .nav-overlay {
+    position: fixed; inset: 0; background: #1A3A46; z-index: 60;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 24px; transform: translateY(-100%);
+    transition: transform .55s cubic-bezier(.77,0,.175,1);
+  }
+  .nav-overlay.open { transform: translateY(0); }
+
+  /* Marker dot */
+  .dot {
+    display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+    background: #B47548; vertical-align: middle; margin: 0 8px 3px 0;
+  }
+
+  /* Logo sizing */
+  .logo-mark { display: inline-block; }
+  .logo-mark svg { width: 100%; height: 100%; display: block; }
+
+  /* ========= MOBILE POLISH ========= */
+  @media (max-width: 767px) {
+    /* Staggered entrance */
+    .m-reveal { opacity: 0; transform: translateY(18px); animation: mrise .9s cubic-bezier(.2,.7,.2,1) both; }
+    @keyframes mrise { to { opacity: 1; transform: none; } }
+    .m-d0 { animation-delay: 0s; }
+    .m-d1 { animation-delay: .08s; }
+    .m-d2 { animation-delay: .16s; }
+    .m-d3 { animation-delay: .26s; }
+    .m-d4 { animation-delay: .36s; }
+    .m-d5 { animation-delay: .46s; }
+    .m-d6 { animation-delay: .58s; }
+
+    /* Subtle ken-burns on hero image */
+    .m-hero-img img { animation: mkb 18s ease-in-out infinite alternate; }
+    @keyframes mkb {
+      0%   { transform: scale(1) translate(0, 0); }
+      100% { transform: scale(1.08) translate(-1.5%, -1.5%); }
+    }
+
+    /* Tap feedback */
+    .pill-svc:active { transform: scale(.97); }
+    .btn-tap:active { transform: scale(.97); }
+
+    /* Pill row — aligned left with content, bleeds only on right */
+    .pill-row {
+      display: flex; gap: .5rem; padding: 2px 0;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding-right: 20px;
+    }
+    .pill-row::-webkit-scrollbar { display: none; }
+    .pill-row { scrollbar-width: none; }
+    .pill-row > .pill-svc { scroll-snap-align: start; flex-shrink: 0; }
+
+    /* Mobile sticky CTA refinement */
+    .sticky-cta {
+      bottom: calc(12px + env(safe-area-inset-bottom));
+      left: 12px; right: 12px;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(245, 241, 234, 0.88);
+      backdrop-filter: saturate(1.3) blur(16px);
+      -webkit-backdrop-filter: saturate(1.3) blur(16px);
+      border-radius: 9999px;
+      box-shadow:
+        0 2px 6px rgba(20,32,36,.06),
+        0 16px 40px -18px rgba(20,32,36,.25),
+        inset 0 0 0 1px rgba(20,32,36,.06);
+    }
+    .sticky-cta a { padding: 12px 16px !important; font-size: 13px !important; }
+
+    /* Bottom-padding so content isn't covered by sticky cta */
+    body { padding-bottom: 84px; }
+
+    /* Decorative vertical accent under meta */
+    .m-rule {
+      height: 1px; background: linear-gradient(90deg, transparent, rgba(20,32,36,.18), transparent);
+    }
+
+    /* Image caption backdrop */
+    .m-cap {
+      background: linear-gradient(180deg, transparent 0%, rgba(20,32,36,0) 40%, rgba(20,32,36,.55) 100%);
+    }
+
+    /* Nav tightening on mobile */
+    #siteNav { padding-top: env(safe-area-inset-top); }
+  }
+
+  /* Hide horizontal scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { scrollbar-width: none; }
+
+  /* ============================================================
+     PROJECTS — editorial bento gallery (v2)
+     ============================================================ */
+  .proj-section { position: relative; }
+  .proj-section::before {
+    content: ""; position: absolute; left: 0; right: 0; top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(20,32,36,.15) 18%, rgba(180,117,72,.5) 50%, rgba(20,32,36,.15) 82%, transparent 100%);
+  }
+
+  .proj-eyebrow {
+    display: inline-flex; align-items: center; gap: 14px;
+    font-size: 11px; letter-spacing: .28em; text-transform: uppercase;
+    color: #B47548; font-weight: 600;
+  }
+  .proj-eyebrow::before {
+    content: ""; width: 38px; height: 1px; background: #B47548; opacity: .55;
+  }
+  .proj-deck {
+    margin-top: 18px;
+    font-size: 13.5px; line-height: 1.55;
+    color: rgba(20,32,36,.6);
+    max-width: 38rem;
+  }
+  .proj-deck em {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: #275161; font-weight: 500;
+  }
+
+  /* Filter chip v2 */
+  .filter-v2 {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 9px 14px 9px 14px;
+    font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
+    font-weight: 600;
+    color: rgba(20,32,36,.62);
+    border-radius: 999px;
+    border: 1px solid rgba(20,32,36,.14);
+    background: transparent;
+    transition: color .35s ease, background-color .35s ease, border-color .35s ease;
+    cursor: pointer;
+  }
+  .filter-v2 .fdot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(20,32,36,.25);
+    transition: background-color .35s ease, transform .35s ease;
+  }
+  .filter-v2 .fnum {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 11.5px; letter-spacing: 0; text-transform: none;
+    color: rgba(20,32,36,.4);
+    margin-left: 2px;
+  }
+  .filter-v2:hover {
+    color: #142024;
+    border-color: rgba(20,32,36,.4);
+  }
+  .filter-v2:hover .fdot { background: #B47548; transform: scale(1.15); }
+  .filter-v2.active {
+    background: #142024 !important;
+    color: #F5F1EA !important;
+    border-color: #142024 !important;
+  }
+  .filter-v2.active .fdot { background: #B47548; }
+  .filter-v2.active .fnum { color: rgba(245,241,234,.55); }
+
+  /* Editorial gallery — uniform portrait plates, vertical offset rhythm */
+  .proj-bento {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  @media (min-width: 640px) {
+    .proj-bento {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .proj-bento {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+  }
+
+  /* Card — image-dominant portrait plate */
+  .proj-v2 {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    background: #FAF7F2;
+    border-radius: 18px;
+    display: block;
+    aspect-ratio: 4 / 5;
+    transition: transform .65s cubic-bezier(.2,.7,.2,1);
+  }
+  .proj-v2:hover { transform: translateY(-6px); }
+  .proj-v2::before {
+    content: "";
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    border: 1px solid rgba(245,241,234,.18);
+    pointer-events: none;
+    z-index: 4;
+    transition: border-color .5s ease;
+  }
+  .proj-v2:hover::before { border-color: rgba(180,117,72,.65); }
+
+  .pv-img {
+    position: absolute; inset: 0;
+    border-radius: inherit;
+    overflow: hidden;
+    margin: 0;
+  }
+  .pv-img::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg,
+        rgba(20,32,36,.42) 0%,
+        rgba(20,32,36,.05) 22%,
+        rgba(20,32,36,0) 42%,
+        rgba(20,32,36,.35) 70%,
+        rgba(20,32,36,.85) 100%);
+    pointer-events: none;
+    z-index: 2;
+    transition: opacity .6s ease;
+  }
+  .pv-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 1.6s cubic-bezier(.2,.7,.2,1), filter .8s ease;
+    filter: saturate(.97) contrast(1.02);
+  }
+  .proj-v2:hover .pv-img img {
+    transform: scale(1.06);
+    filter: saturate(1.04) contrast(1.05);
+  }
+
+  /* Top-left index */
+  .pv-num {
+    position: absolute; top: 22px; left: 24px; z-index: 3;
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 12.5px;
+    color: rgba(245,241,234,.92);
+    letter-spacing: .08em;
+  }
+
+  /* Top-right glass category pill */
+  .pv-cat {
+    position: absolute; top: 20px; right: 20px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 12px 6px 11px;
+    background: rgba(245,241,234,.18);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    backdrop-filter: saturate(1.4) blur(12px);
+    border: 1px solid rgba(245,241,234,.26);
+    border-radius: 999px;
+    font-size: 9.5px; letter-spacing: .22em; text-transform: uppercase;
+    color: #F5F1EA; font-weight: 600;
+  }
+  .pv-cat::before {
+    content: ""; width: 5px; height: 5px;
+    background: #B47548; border-radius: 50%;
+  }
+
+  .pv-feat { display: none; }
+
+  /* Footer overlay */
+  .pv-foot {
+    position: absolute; bottom: 0; left: 0; right: 0; z-index: 3;
+    padding: 22px 24px 22px 24px;
+    display: flex; align-items: flex-end;
+    justify-content: space-between; gap: 16px;
+    color: #F5F1EA;
+  }
+  .pv-info { min-width: 0; flex: 1; }
+
+  .pv-rule {
+    display: block; height: 1px;
+    background: rgba(245,241,234,.42);
+    width: 24px;
+    margin-bottom: 13px;
+    transition: width .7s cubic-bezier(.2,.7,.2,1), background-color .4s ease;
+  }
+  .proj-v2:hover .pv-rule {
+    width: 64px;
+    background: #B47548;
+  }
+
+  .pv-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; line-height: 1.05;
+    color: #F5F1EA;
+    letter-spacing: -.005em;
+  }
+  @media (min-width: 1024px) {
+    .pv-title { font-size: 23px; }
+  }
+  @media (min-width: 1280px) {
+    .pv-title { font-size: 25px; }
+  }
+  .pv-title .ti {
+    font-style: italic; font-weight: 400;
+    color: rgba(245,241,234,.78);
+  }
+  .proj-v2.is-featured .pv-title { font-size: 22px; }
+  @media (min-width: 1024px) { .proj-v2.is-featured .pv-title { font-size: 23px; } }
+  @media (min-width: 1280px) { .proj-v2.is-featured .pv-title { font-size: 25px; } }
+
+  .pv-meta {
+    margin-top: 10px;
+    display: flex; flex-wrap: wrap;
+    align-items: center; gap: 8px;
+    font-size: 10px;
+    letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(245,241,234,.72);
+    font-weight: 500;
+  }
+  .pv-meta .dotsep {
+    display: inline-block;
+    width: 3px; height: 3px;
+    border-radius: 50%;
+    background: #B47548;
+  }
+
+  /* Glass arrow chip */
+  .pv-arrow {
+    flex-shrink: 0;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(245,241,234,.16);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(245,241,234,.32);
+    color: #F5F1EA;
+    transition: background-color .55s cubic-bezier(.2,.7,.2,1),
+                color .55s cubic-bezier(.2,.7,.2,1),
+                border-color .55s cubic-bezier(.2,.7,.2,1),
+                transform .55s cubic-bezier(.2,.7,.2,1);
+  }
+  .proj-v2:hover .pv-arrow {
+    background: #F5F1EA;
+    color: #142024;
+    border-color: #F5F1EA;
+    transform: rotate(-45deg);
+  }
+  .proj-v2.is-featured .pv-arrow { width: 42px; height: 42px; }
+
+  /* Drop bento span behavior — all uniform now */
+  .span-feat, .span-tall, .span-wide, .span-mid {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  /* Section CTA — minimal */
+  .proj-cta {
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 8px 10px 8px 18px;
+    border-radius: 999px;
+    border: 1px solid rgba(20,32,36,.16);
+    font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase;
+    font-weight: 600;
+    color: #142024;
+    line-height: 1;
+    transition: background-color .4s ease, color .4s ease, border-color .4s ease;
+  }
+  .proj-cta:hover {
+    background: #142024; color: #F5F1EA; border-color: #142024;
+  }
+  .proj-cta-count {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 12px; letter-spacing: 0; text-transform: none;
+    color: rgba(20,32,36,.45);
+  }
+  .proj-cta:hover .proj-cta-count { color: rgba(245,241,234,.6); }
+  .proj-cta .cta-arrow {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(180,117,72,.15);
+    color: #B47548;
+    transition: background-color .4s ease, color .4s ease, transform .55s cubic-bezier(.2,.7,.2,1);
+  }
+  .proj-cta:hover .cta-arrow {
+    background: #B47548; color: #F5F1EA;
+    transform: rotate(-45deg);
+  }
+
+  /* Section side index */
+  .proj-side {
+    display: none;
+    font-family: 'Playfair Display', serif; font-style: italic;
+    font-size: 12px; color: rgba(20,32,36,.4);
+    letter-spacing: .04em;
+  }
+  @media (min-width: 1024px) { .proj-side { display: inline-flex; align-items: center; gap: 10px; } }
+  .proj-side::before {
+    content: ""; width: 24px; height: 1px; background: rgba(20,32,36,.25);
+  }
+</style>
+</head>
+
+<body class="app-frame">
+
+<!-- Custom cursor -->
+<div class="custom-cursor hidden lg:block" id="cursor"></div>
+
+<!-- ===== NAV ===== -->
+<nav id="siteNav" class="fixed top-0 left-0 right-0 z-40">
+  <div class="relative px-5 md:px-10 py-3 md:py-4 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-2 text-petrol" aria-label="İdea İnşaat">
+      <svg viewBox="0 0 643 615" class="h-10 md:h-12 w-auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M64.1328 271.06V424.804V425.073L96.2751 406.516V288.06L151.142 252.906V375.474L182.628 357.296V109.013L235.598 74.0373V326.918L266.382 309.145V53.9614L318.141 17.7307L295.212 0L151.142 92.9784V215.656L64.1328 271.06Z" opacity=".75"/>
+        <path d="M461.034 250.539L400.945 316.488V460.068H403.302H461.034V250.539Z"/>
+        <path d="M485.223 460.487V246.377L546.353 289.086V460.487H485.223Z"/>
+        <path d="M318.141 279.86V17.7373L378.19 54.6772V245.572L318.141 279.86Z"/>
+        <path d="M464.107 110.145L404.648 70.3494V230.854L464.107 196.525V110.145Z"/>
+        <path d="M317.764 460.068V408.698L379.266 339.89V460.068H317.764Z"/>
+        <path d="M270.129 460.068H217.063L461.038 250.542L270.129 460.068Z" opacity=".75"/>
+        <path d="M574.941 132.349L0 460.487L64.1765 458.315L574.941 132.349Z" opacity=".75"/>
+        <path d="M165.258 451.32C165.258 447.133 164.996 443.796 164.473 441.309C164.08 438.823 163.099 436.86 161.528 435.421C159.958 433.981 157.734 433 154.855 432.476C151.976 431.953 148.181 431.56 143.47 431.299V426.784H210.012V431.299C205.301 431.429 201.506 431.822 198.627 432.476C195.748 433 193.524 433.981 191.953 435.421C190.383 436.86 189.336 438.888 188.813 441.506C188.289 443.992 188.027 447.263 188.027 451.32V551.035C188.027 555.092 188.289 558.428 188.813 561.046C189.467 563.532 190.579 565.495 192.15 566.934C193.72 568.374 195.944 569.421 198.823 570.075C201.702 570.598 205.432 570.926 210.012 571.056V575.178H143.47V571.056C148.181 570.926 151.976 570.598 154.855 570.075C157.734 569.421 159.893 568.374 161.332 566.934C162.902 565.495 163.949 563.532 164.473 561.046C164.996 558.559 165.258 555.222 165.258 551.035V451.32ZM238.042 491.374C238.042 488.54 237.909 486.283 237.644 484.6C237.378 482.918 236.758 481.634 235.784 480.749C234.899 479.775 233.571 479.111 231.8 478.757C230.118 478.402 227.771 478.093 224.761 477.827V474.772H265.667C275.141 474.772 283.641 475.923 291.167 478.225C298.693 480.439 305.024 483.671 310.159 487.921C315.383 492.171 319.368 497.395 322.112 503.593C324.857 509.79 326.23 516.785 326.23 524.577C326.23 532.28 324.769 539.452 321.847 546.093C318.925 552.733 314.808 558.311 309.495 562.827C304.802 566.723 298.737 569.777 291.3 571.991C283.951 574.116 276.071 575.178 267.659 575.178H224.761V572.389C227.683 572.212 229.985 571.947 231.667 571.593C233.438 571.15 234.766 570.441 235.651 569.468C236.625 568.405 237.245 567.033 237.511 565.35C237.865 563.668 238.042 561.499 238.042 558.843V491.374ZM253.448 563.358C253.448 565.837 253.98 567.52 255.042 568.405C256.193 569.202 258.23 569.6 261.151 569.6C267.969 569.6 273.68 569.158 278.284 568.272C282.977 567.298 287.271 565.66 291.167 563.358C303.563 556.275 309.761 543.702 309.761 525.639C309.761 517.316 308.167 509.923 304.98 503.46C301.881 496.996 297.276 491.728 291.167 487.655C287.448 485.176 283.154 483.361 278.284 482.21C273.503 481.059 267.792 480.483 261.151 480.483C258.141 480.483 256.105 480.882 255.042 481.678C253.98 482.475 253.448 484.025 253.448 486.327V563.358ZM422.28 575.178H340.467V572.389C343.212 572.212 345.425 571.902 347.108 571.46C348.879 571.017 350.207 570.309 351.092 569.335C352.066 568.361 352.73 567.033 353.084 565.35C353.438 563.668 353.616 561.499 353.616 558.843V491.374C353.616 488.718 353.438 486.548 353.084 484.866C352.819 483.184 352.199 481.856 351.225 480.882C350.251 479.908 348.879 479.199 347.108 478.757C345.425 478.314 343.212 478.004 340.467 477.827V474.772H420.951L421.217 496.553H417.631C416.923 493.1 416.126 490.356 415.241 488.319C414.355 486.194 413.071 484.556 411.389 483.405C409.795 482.254 407.626 481.501 404.881 481.147C402.225 480.793 398.772 480.616 394.522 480.616H374.069C372.032 480.616 370.66 480.926 369.951 481.546C369.332 482.165 369.022 483.582 369.022 485.796V519.397H392.264C395.363 519.397 397.886 519.22 399.834 518.866C401.782 518.512 403.332 517.848 404.483 516.874C405.722 515.811 406.652 514.35 407.272 512.491C407.892 510.632 408.467 508.152 408.998 505.053H412.584V540.249H408.998C408.467 537.061 407.892 534.538 407.272 532.678C406.652 530.731 405.767 529.27 404.616 528.296C403.464 527.233 401.915 526.525 399.967 526.171C398.019 525.816 395.451 525.639 392.264 525.639H369.022V563.093C369.022 564.598 369.11 565.705 369.287 566.413C369.464 567.121 369.774 567.652 370.217 568.007C370.925 568.449 372.608 568.848 375.264 569.202C378.009 569.468 381.241 569.6 384.959 569.6H389.209C394.61 569.6 399.126 569.335 402.756 568.803C406.475 568.272 409.618 567.254 412.186 565.749C414.842 564.244 417.144 562.207 419.092 559.639C421.04 557.072 422.944 553.707 424.803 549.546H429.186L422.28 575.178ZM545.291 575.178H506.642V572.389C507.97 572.389 509.077 572.389 509.962 572.389C510.848 572.301 511.556 572.212 512.087 572.124C512.707 571.947 513.238 571.814 513.681 571.725C514.124 571.548 514.567 571.327 515.009 571.061C515.718 570.619 516.249 570.087 516.603 569.468C517.046 568.759 517.267 568.051 517.267 567.343C517.267 564.863 516.293 561.41 514.345 556.983L507.97 542.507H468.392L461.353 560.171C460.999 561.145 460.689 562.163 460.423 563.225C460.246 564.199 460.158 565.173 460.158 566.147C460.158 568.184 460.955 569.733 462.548 570.796C464.142 571.858 466.798 572.389 470.517 572.389V575.178H440.369V572.389C442.228 572.301 443.822 571.991 445.15 571.46C446.478 570.928 447.806 569.822 449.134 568.139C450.462 566.369 451.879 563.889 453.384 560.702C454.978 557.426 456.97 552.999 459.361 547.421L490.837 473.046H493.759L531.611 559.108C532.85 561.941 533.913 564.199 534.798 565.882C535.772 567.564 536.746 568.892 537.72 569.866C538.694 570.751 539.757 571.371 540.908 571.725C542.147 572.08 543.608 572.301 545.291 572.389V575.178ZM505.978 536.397L488.447 494.561L470.916 536.397H505.978Z"/>
+      </svg>
+    </a>
+
+    <!-- Desktop menu -->
+    <div class="hidden md:flex items-center gap-8 text-[14px] text-petrol/80">
+      <a href="#xidmetler" class="link-anim hover:text-petrol">Xidmətlər</a>
+      <a href="#proses" class="link-anim hover:text-petrol">Proses</a>
+      <a href="#layiheler" class="link-anim hover:text-petrol">Layihələr</a>
+      <a href="#rey" class="link-anim hover:text-petrol">Rəylər</a>
+      <a href="#elaqe" class="link-anim hover:text-petrol">Əlaqə</a>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <a href="tel:+994505550415" class="hidden lg:inline-flex text-petrol/70 hover:text-petrol text-[13px] font-medium items-center gap-1.5">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M13.5 10v2a1 1 0 01-1.1 1 11 11 0 01-4.8-1.7 10.8 10.8 0 01-3.3-3.3A11 11 0 012.4 3.2 1 1 0 013.4 2h2a1 1 0 011 .86 6.8 6.8 0 00.37 1.5 1 1 0 01-.22 1L5.7 6.2a8.8 8.8 0 003.3 3.3l.86-.86a1 1 0 011-.22 6.8 6.8 0 001.5.37 1 1 0 01.86 1z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        +994 50 555 04 15
+      </a>
+      <a href="#elaqe" class="hidden md:inline-flex bg-petrol hover:bg-petrol-deep text-cream px-4 py-2 rounded-full text-[13px] font-medium items-center gap-1.5 transition">
+        Konsultasiya
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </a>
+      <!-- Mobile menu toggle -->
+      <button id="navToggle" aria-label="Menyunu aç" class="md:hidden w-10 h-10 rounded-full bg-petrol/10 text-petrol flex items-center justify-center">
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M1 1H19M1 7H19M1 13H12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Fullscreen Nav Overlay (mobile) -->
+<div id="navOverlay" class="nav-overlay">
+  <button id="navClose" aria-label="Bağla" class="absolute top-4 right-4 w-11 h-11 rounded-full bg-cream/10 text-cream flex items-center justify-center">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </button>
+  <ul class="font-display text-cream text-5xl space-y-5 leading-none">
+    <li><a href="#xidmetler" class="nav-link">Xidmətlər</a></li>
+    <li><a href="#proses" class="nav-link">Proses</a></li>
+    <li><a href="#layiheler" class="nav-link">Layihələr</a></li>
+    <li><a href="#rey" class="nav-link">Rəylər</a></li>
+    <li><a href="#elaqe" class="nav-link">Əlaqə</a></li>
+  </ul>
+  <div class="mt-10 text-cream/60 text-sm">
+    <div class="mb-2">salam@ideainsaat.az</div>
+    <div>+994 50 555 04 15</div>
+  </div>
+</div>
+
+<!-- ===== MAIN SURFACE ===== -->
+<main class="app-surface">
+
+  <!-- ===== HERO — diagonal clip image layout ===== -->
+  <section class="relative px-3 md:px-5 lg:px-6 pt-20 md:pt-24 lg:pt-28 pb-4 md:pb-6">
+
+    <!-- Mobile & desktop share this inner relative container -->
+    <div class="relative">
+
+      <!-- ===== DESKTOP LAYOUT (md+): diagonal-clipped image on right, content on cream left ===== -->
+      <div class="hidden md:block relative rounded-[32px] lg:rounded-[40px] overflow-hidden" style="min-height: calc(100vh - 140px); max-height: 860px;">
+
+        <!-- DIAGONAL HERO IMAGE — right side, clean (no overlays), diagonal clip on left edge -->
+        <div class="absolute top-0 right-0 bottom-0 grain bg-petrol overflow-hidden"
+             style="width:58%;clip-path:polygon(18% 0%,100% 0%,100% 100%,6% 100%);">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2000&q=85"
+               alt="Müasir villa interyeri" class="w-full h-full object-cover" loading="eager" />
+          <div class="absolute inset-0 bg-gradient-to-b from-ink/5 via-transparent to-ink/25 pointer-events-none"></div>
+          <!-- Floating badge -->
+          <div class="absolute top-6 right-6 bg-ink/40 backdrop-blur px-3.5 py-2 rounded-full text-[11px] text-cream font-medium inline-flex items-center gap-2 border border-cream/15">
+            <span class="w-1.5 h-1.5 rounded-full bg-copper animate-pulse"></span>
+            Mərdəkan Villa · 2025
+          </div>
+        </div>
+
+        <!-- LEFT COLUMN — flex: meta+headline top, pills+input+quote+stats bottom -->
+        <div class="absolute inset-y-0 left-0 z-10 px-10 lg:px-14 xl:px-16 py-10 lg:py-12
+                    w-[54%] lg:w-[52%] xl:w-[50%] flex flex-col justify-between gap-8">
+          <!-- TOP: meta + headline -->
+          <div>
+            <!-- meta row -->
+            <div class="flex items-center gap-3 text-[11px] uppercase tracking-[0.22em] text-petrol/70 mb-5">
+              <span class="inline-flex items-center gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-copper"></span>
+                Bakı · 2026 — bu gün
+              </span>
+              <span class="h-px flex-1 bg-petrol/15 max-w-[60px]"></span>
+              <span class="text-petrol/50">442+ layihə</span>
+            </div>
+            <!-- headline -->
+            <h1 class="font-display font-normal leading-[1.1] tracking-tight
+                       text-[48px] lg:text-[68px] xl:text-[84px]">
+              <span class="text-ink">Xəyalınızı</span><br/>
+              <span class="hl-ghost">reallığa</span><br/>
+              <span class="text-ink">çeviririk<span class="italic-display text-copper">.</span></span>
+            </h1>
+          </div>
+          <!-- BOTTOM: pills + input + quote + stats strip -->
+          <div class="max-w-[540px]">
+            <!-- service pills -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <button type="button" class="pill-svc is-active">Dizayn</button>
+              <button type="button" class="pill-svc">Tikinti</button>
+              <button type="button" class="pill-svc">Mebel</button>
+              <button type="button" class="pill-svc">Eksteryer</button>
+              <button type="button" class="pill-svc">Landşaft</button>
+            </div>
+            <!-- CTA input -->
+            <form action="#elaqe" method="get" class="bg-cream-warm/80 border border-ink/8 rounded-full p-1.5 pl-5 flex items-center gap-3">
+              <input type="text" name="brief" placeholder="Layihənizi bir cümlə ilə təsvir edin..."
+                     class="bg-transparent border-0 outline-none text-ink text-sm flex-1 min-w-0 placeholder:text-petrol/60" />
+              <button type="submit" aria-label="Göndər"
+                      class="w-11 h-11 rounded-full bg-copper hover:bg-copper-deep text-cream flex items-center justify-center transition flex-shrink-0">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+              </button>
+            </form>
+            <!-- Quote -->
+            <div class="mt-5 pt-5 border-t border-ink/8 flex items-start gap-3">
+              <div class="font-display text-copper text-3xl leading-none -mt-2">"</div>
+              <p class="italic-display text-ink/65 text-[13px] leading-relaxed">
+                Dizayndan açar təhvilə qədər — tək bir komanda, tək bir məsuliyyət. Hər detalı incəliklə həyata keçiririk.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ===== MOBILE LAYOUT — editorial, image-led, refined stack ===== -->
+      <div class="md:hidden space-y-6 px-1">
+
+        <!-- 1. META ROW -->
+        <div class="m-reveal m-d0 flex items-center gap-3 text-[10px] uppercase tracking-[0.22em] text-petrol/70">
+          <span class="inline-flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-copper"></span>
+            Bakı · 2026+
+          </span>
+          <span class="m-rule flex-1"></span>
+          <span class="text-petrol/55">442+ layihə</span>
+        </div>
+
+        <!-- 2. HEADLINE -->
+        <h1 class="m-reveal m-d1 font-display font-normal leading-[.98] tracking-[-.015em]
+                   text-[56px] sm:text-[66px] -mt-1">
+          <span class="text-ink">Xəyalınızı</span><br/>
+          <span class="italic-display hl-ghost">reallığa</span><br/>
+          <span class="text-ink">çeviririk<span class="italic-display text-copper">.</span></span>
+        </h1>
+
+        <!-- 3. PULL QUOTE — elegant serif -->
+        <div class="m-reveal m-d2 flex items-start gap-3 pl-4 border-l-2 border-copper/50 -mt-2">
+          <p class="italic-display text-ink/70 text-[13.5px] leading-[1.55]">
+            Dizayndan açar təhvilə qədər, tək bir komanda — hər detalı incəliklə həyata keçiririk.
+          </p>
+        </div>
+
+        <!-- 4. HERO IMAGE — tall portrait, overlaid caption -->
+        <figure class="m-reveal m-d3 m-hero-img relative aspect-[4/5] rounded-[28px] overflow-hidden grain bg-petrol">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85"
+               alt="Mərdəkan Villa · 2025 — tamamlanmış layihə" class="w-full h-full object-cover" loading="eager" />
+          <!-- gradient for caption legibility -->
+          <div class="absolute inset-0 m-cap pointer-events-none"></div>
+          <!-- caption bottom-left -->
+          <figcaption class="absolute bottom-5 left-5 right-5 text-cream">
+            <div class="text-[10px] uppercase tracking-[0.22em] text-cream/65">Mərdəkan · 2025</div>
+            <div class="font-display text-[22px] leading-tight mt-1">Villa Ay<span class="italic-display text-copper">.</span></div>
+          </figcaption>
+        </figure>
+
+        <!-- 5. SERVICE PILLS — horizontal scroll, aligned with content -->
+        <div class="m-reveal m-d4">
+          <div class="pill-row no-scrollbar">
+            <button type="button" class="pill-svc btn-tap is-active">Dizayn</button>
+            <button type="button" class="pill-svc btn-tap">Tikinti</button>
+            <button type="button" class="pill-svc btn-tap">Mebel</button>
+            <button type="button" class="pill-svc btn-tap">Eksteryer</button>
+            <button type="button" class="pill-svc btn-tap">Landşaft</button>
+          </div>
+        </div>
+
+        <!-- 6. CTA INPUT -->
+        <form action="#elaqe" method="get"
+              class="m-reveal m-d5 bg-cream-warm border border-ink/10 rounded-full p-1.5 pl-5 flex items-center gap-3
+                     shadow-[0_10px_24px_-16px_rgba(20,32,36,.25)]">
+          <input type="text" name="brief" placeholder="Layihənizi təsvir edin..."
+                 class="bg-transparent border-0 outline-none text-ink text-[13px] flex-1 min-w-0 placeholder:text-petrol/55" />
+          <button type="submit" aria-label="Göndər"
+                  class="btn-tap w-11 h-11 rounded-full bg-copper text-cream flex items-center justify-center flex-shrink-0 transition-transform">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+        </form>
+
+        <!-- 7. STATS STRIP — minimal, editorial -->
+        <div class="m-reveal m-d6 grid grid-cols-3 divide-x divide-ink/10 text-ink pt-2">
+          <div class="pr-3">
+            <div class="font-display text-[28px] leading-none">13<span class="text-copper">.</span></div>
+            <div class="text-[9.5px] text-ink/55 mt-1 uppercase tracking-[0.18em]">il təcrübə</div>
+          </div>
+          <div class="px-3">
+            <div class="font-display text-[28px] leading-none">442<span class="text-copper">.</span></div>
+            <div class="text-[9.5px] text-ink/55 mt-1 uppercase tracking-[0.18em]">layihə</div>
+          </div>
+          <div class="pl-3">
+            <div class="font-display text-[28px] leading-none">1.5K<span class="text-copper">.</span></div>
+            <div class="text-[9.5px] text-ink/55 mt-1 uppercase tracking-[0.18em]">müştəri</div>
+          </div>
+        </div>
+
+        <!-- 8. SCROLL HINT -->
+        <div class="m-reveal m-d6 flex items-center justify-center gap-2 text-petrol/50 text-[10px] uppercase tracking-[0.3em] pt-2 pb-1">
+          <span class="w-6 h-px bg-petrol/25"></span>
+          Aşağı sürüşdür
+          <span class="w-6 h-px bg-petrol/25"></span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== TRUSTED BY / MARQUEE ===== -->
+  <section class="bg-petrol text-cream/70 py-6 mt-10 md:mt-24 overflow-hidden">
+    <div class="marquee-track">
+      <div class="flex items-center gap-10 md:gap-16 px-8 text-sm md:text-base whitespace-nowrap font-display">
+        <span>Port Baku Residence</span><span class="text-copper">✦</span>
+        <span>Crescent Mall</span><span class="text-copper">✦</span>
+        <span>Mərdəkan Villalar</span><span class="text-copper">✦</span>
+        <span>White City</span><span class="text-copper">✦</span>
+        <span>28 Mall</span><span class="text-copper">✦</span>
+        <span>Azure Residence</span><span class="text-copper">✦</span>
+      </div>
+      <div class="flex items-center gap-10 md:gap-16 px-8 text-sm md:text-base whitespace-nowrap font-display" aria-hidden="true">
+        <span>Port Baku Residence</span><span class="text-copper">✦</span>
+        <span>Crescent Mall</span><span class="text-copper">✦</span>
+        <span>Mərdəkan Villalar</span><span class="text-copper">✦</span>
+        <span>White City</span><span class="text-copper">✦</span>
+        <span>28 Mall</span><span class="text-copper">✦</span>
+        <span>Azure Residence</span><span class="text-copper">✦</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT — centered editorial with flanking bleed imagery ===== -->
+  <section class="relative px-5 md:px-10 py-12 md:py-28 overflow-hidden">
+
+    <!-- ====== MOBILE LAYOUT (compact editorial — text + flanking strip) ====== -->
+    <div class="md:hidden relative">
+
+      <!-- Compact flanking row: small left bleed image + text/right tied -->
+      <div class="reveal text-center px-1">
+        <!-- Eyebrow -->
+        <div class="inline-flex items-center gap-2.5 text-[9.5px] uppercase tracking-[0.26em] text-copper font-semibold mb-3">
+          <span class="h-px w-5 bg-copper/60"></span>
+          Biz kimik
+          <span class="h-px w-5 bg-copper/60"></span>
+        </div>
+
+        <!-- Ornament -->
+        <div class="flex justify-center mb-3">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" class="text-ink/65">
+            <path d="M12 2L13.5 10.5L22 12L13.5 13.5L12 22L10.5 13.5L2 12L10.5 10.5L12 2Z" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <!-- Headline -->
+        <h2 class="font-display font-normal text-[30px] leading-[1.05] tracking-[-.012em] text-ink">
+          Sizin üçün
+          <span class="italic-display text-copper-deep">mükəmməllik</span>.
+        </h2>
+
+        <!-- Body -->
+        <p class="mt-3.5 text-ink/65 text-[13px] leading-[1.6] max-w-[34ch] mx-auto">
+          35 nəfərlik multidissiplinar bir komanda — memar, mühəndis,
+          dizayner və mebel ustaları. Hər detalı incəliklə işləyirik.
+        </p>
+
+        <!-- CTA -->
+        <div class="mt-5">
+          <a href="#layiheler"
+             class="inline-flex items-center gap-2 bg-ink text-cream
+                    rounded-full px-5 py-2.5 text-[10.5px] tracking-[0.18em] uppercase font-semibold">
+            Portfoliomuza bax
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Compact image strip — two bleeding shots side by side, asymmetric heights -->
+      <div class="reveal mt-7 -mx-5 grid grid-cols-2 gap-2">
+        <!-- Left: bleeds off LEFT, slightly taller -->
+        <div class="relative aspect-[4/5] rounded-r-[18px] overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80"
+               alt="İnteryer" loading="lazy"
+               class="w-full h-full object-cover"/>
+          <span class="absolute bottom-2 left-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-cream/85 backdrop-blur-sm text-[8.5px] tracking-[0.22em] uppercase text-ink font-semibold">
+            <span class="w-1 h-1 rounded-full bg-copper"></span>İnteryer
+          </span>
+        </div>
+        <!-- Right: bleeds off RIGHT, offset top -->
+        <div class="relative aspect-[4/5] rounded-l-[18px] overflow-hidden mt-5">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80"
+               alt="Eksteryer" loading="lazy"
+               class="w-full h-full object-cover"/>
+          <span class="absolute bottom-2 right-2 inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-cream/85 backdrop-blur-sm text-[8.5px] tracking-[0.22em] uppercase text-ink font-semibold">
+            <span class="w-1 h-1 rounded-full bg-copper"></span>Eksteryer
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== DESKTOP LAYOUT ====== -->
+    <div class="hidden md:grid grid-cols-12 gap-4 md:gap-8 items-center max-w-7xl mx-auto relative">
+
+      <!-- Left flanking image (bleeds off screen, sits higher) -->
+      <div class="reveal md:col-span-3 lg:col-span-3 relative -ml-[14vw] lg:-ml-[10vw] -mt-16 md:-mt-24">
+        <div class="relative aspect-[5/4] rounded-[22px] overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=80"
+               alt="İdea İnşaat villa interior" loading="lazy"
+               class="w-full h-full object-cover"/>
+        </div>
+      </div>
+
+      <!-- Center content -->
+      <div class="reveal col-span-6 text-center px-2 md:px-6 relative z-10">
+        <div class="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.28em] text-copper font-semibold mb-6">
+          <span class="h-px w-6 bg-copper/60"></span>
+          Biz kimik
+          <span class="h-px w-6 bg-copper/60"></span>
+        </div>
+
+        <div class="flex justify-center mb-5">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" class="text-ink/70">
+            <path d="M12 2L13.5 10.5L22 12L13.5 13.5L12 22L10.5 13.5L2 12L10.5 10.5L12 2Z" fill="currentColor"/>
+          </svg>
+        </div>
+
+        <h2 class="font-display font-normal text-[46px] lg:text-[54px] leading-[1.08] tracking-[-.012em] text-ink">
+          Sizin üçün dizayn edilmiş
+          <span class="italic-display text-copper-deep">mükəmməllik</span>.
+        </h2>
+
+        <p class="mt-6 text-ink/65 text-[15px] leading-[1.7] max-w-[520px] mx-auto">
+          Kiçik bir dizayn studiyasından başlayan hekayəmiz bu gün
+          memar, mühəndis, dizayner və mebel ustalarından ibarət
+          35 nəfərlik multidissiplinar bir komanda ilə davam edir.
+          Hər bir detalı incəliklə işləyirik — təhvil verdiyimiz
+          hər layihə, arxasında qürurla durduğumuz bir sənət əsəridir.
+        </p>
+
+        <div class="mt-8">
+          <a href="#layiheler"
+             class="inline-flex items-center gap-2.5 bg-ink hover:bg-petrol text-cream
+                    rounded-full px-6 py-3 text-[12px] tracking-[0.18em] uppercase font-semibold transition-colors">
+            Portfoliomuza bax
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Right flanking image (bleeds off screen, sits lower) -->
+      <div class="reveal md:col-span-3 lg:col-span-3 relative -mr-[14vw] lg:-mr-[10vw] mt-16 md:mt-24">
+        <div class="relative aspect-[5/4] rounded-[22px] overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1000&q=80"
+               alt="İdea İnşaat villa exterior" loading="lazy"
+               class="w-full h-full object-cover"/>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="xidmetler" class="px-5 md:px-10 py-16 md:py-28 bg-cream-warm/40">
+    <div class="flex items-end justify-between mb-10 md:mb-14">
+      <div>
+        <div class="text-xs uppercase tracking-[0.22em] text-copper mb-4">Xidmətlərimiz</div>
+        <h2 class="font-display text-4xl md:text-6xl leading-[1.05] text-ink max-w-3xl">
+          Beş xidmət, <span class="italic-display">bir komanda</span>.
+        </h2>
+      </div>
+      <div class="hidden md:flex gap-2">
+        <button class="scroll-btn w-11 h-11 rounded-full border border-ink/20 flex items-center justify-center hover:bg-ink hover:text-cream transition" data-dir="-1" aria-label="Geri">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M14 8H2M2 8L8 2M2 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <button class="scroll-btn w-11 h-11 rounded-full border border-ink/20 flex items-center justify-center hover:bg-ink hover:text-cream transition" data-dir="1" aria-label="İrəli">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="servicesScroll" class="flex flex-col md:flex-row gap-10 md:gap-8 md:overflow-x-auto md:snap-x-mandatory no-scrollbar md:pb-4">
+
+      <!-- 01 Dizayn -->
+      <article class="md:snap-start md:shrink-0 w-full md:w-[31%] group">
+        <a href="#" class="block">
+          <div class="aspect-[4/3] md:aspect-[4/5] overflow-hidden rounded-[20px] relative bg-petrol/5">
+            <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=80" alt="İnteryer Dizayn" loading="lazy"
+                 class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"/>
+          </div>
+          <div class="mt-5 flex items-start gap-4">
+            <span class="font-display text-[24px] text-ink/25 leading-none tracking-tight pt-1">01</span>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-display text-[22px] md:text-[24px] text-ink leading-[1.1]">İnteryer Dizayn</h3>
+              <p class="mt-2 text-[13px] text-ink/55 leading-[1.55]">Konseptdən 3D vizualizasiyaya — hər detalı həyat tərzinə uyğun.</p>
+            </div>
+            <span aria-hidden="true"
+                  class="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-ink/55 group-hover:bg-ink group-hover:text-cream group-hover:border-ink transition flex-shrink-0 mt-1">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+        </a>
+      </article>
+
+      <!-- 02 Tikinti -->
+      <article class="md:snap-start md:shrink-0 w-full md:w-[31%] group">
+        <a href="#" class="block">
+          <div class="aspect-[4/3] md:aspect-[4/5] overflow-hidden rounded-[20px] relative bg-petrol/5">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80" alt="Tikinti İşləri" loading="lazy"
+                 class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"/>
+          </div>
+          <div class="mt-5 flex items-start gap-4">
+            <span class="font-display text-[24px] text-ink/25 leading-none tracking-tight pt-1">02</span>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-display text-[22px] md:text-[24px] text-ink leading-[1.1]">Tikinti İşləri</h3>
+              <p class="mt-2 text-[13px] text-ink/55 leading-[1.55]">Açar təhvil tikinti, kapital təmir və rekonstruksiya.</p>
+            </div>
+            <span aria-hidden="true"
+                  class="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-ink/55 group-hover:bg-ink group-hover:text-cream group-hover:border-ink transition flex-shrink-0 mt-1">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+        </a>
+      </article>
+
+      <!-- 03 Mebel -->
+      <article class="md:snap-start md:shrink-0 w-full md:w-[31%] group">
+        <a href="#" class="block">
+          <div class="aspect-[4/3] md:aspect-[4/5] overflow-hidden rounded-[20px] relative bg-petrol/5">
+            <img src="https://images.unsplash.com/photo-1567016432779-094069958ea5?w=900&q=80" alt="Mebel İstehsalı" loading="lazy"
+                 class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"/>
+          </div>
+          <div class="mt-5 flex items-start gap-4">
+            <span class="font-display text-[24px] text-ink/25 leading-none tracking-tight pt-1">03</span>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-display text-[22px] md:text-[24px] text-ink leading-[1.1]">Mebel İstehsalı</h3>
+              <p class="mt-2 text-[13px] text-ink/55 leading-[1.55]">Öz sexdə layihəyə uyğun ölçülü mebel — mətbəx, otaq, ofis.</p>
+            </div>
+            <span aria-hidden="true"
+                  class="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-ink/55 group-hover:bg-ink group-hover:text-cream group-hover:border-ink transition flex-shrink-0 mt-1">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+        </a>
+      </article>
+
+      <!-- 04 Eksteryer -->
+      <article class="md:snap-start md:shrink-0 w-full md:w-[31%] group">
+        <a href="#" class="block">
+          <div class="aspect-[4/3] md:aspect-[4/5] overflow-hidden rounded-[20px] relative bg-petrol/5">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80" alt="Fasad və Eksteryer" loading="lazy"
+                 class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"/>
+          </div>
+          <div class="mt-5 flex items-start gap-4">
+            <span class="font-display text-[24px] text-ink/25 leading-none tracking-tight pt-1">04</span>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-display text-[22px] md:text-[24px] text-ink leading-[1.1]">Fasad və Eksteryer</h3>
+              <p class="mt-2 text-[13px] text-ink/55 leading-[1.55]">Fasad üzləmə və memarlıq elementləri — klassikdən minimalizmə.</p>
+            </div>
+            <span aria-hidden="true"
+                  class="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-ink/55 group-hover:bg-ink group-hover:text-cream group-hover:border-ink transition flex-shrink-0 mt-1">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+        </a>
+      </article>
+
+      <!-- 05 Landşaft -->
+      <article class="md:snap-start md:shrink-0 w-full md:w-[31%] group">
+        <a href="#" class="block">
+          <div class="aspect-[4/3] md:aspect-[4/5] overflow-hidden rounded-[20px] relative bg-petrol/5">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Landşaft Dizayn" loading="lazy"
+                 class="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"/>
+          </div>
+          <div class="mt-5 flex items-start gap-4">
+            <span class="font-display text-[24px] text-ink/25 leading-none tracking-tight pt-1">05</span>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-display text-[22px] md:text-[24px] text-ink leading-[1.1]">Landşaft Dizayn</h3>
+              <p class="mt-2 text-[13px] text-ink/55 leading-[1.55]">Həyət, hovuz, bağ və yaşıllaşdırma — evə qədər davam edən estetika.</p>
+            </div>
+            <span aria-hidden="true"
+                  class="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-ink/55 group-hover:bg-ink group-hover:text-cream group-hover:border-ink transition flex-shrink-0 mt-1">
+              <svg width="11" height="11" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS — compact editorial list ===== -->
+  <section id="proses" class="px-5 md:px-10 py-16 md:py-28">
+    <!-- Header -->
+    <div class="max-w-3xl mb-10 md:mb-16">
+      <div class="flex items-center gap-2 text-[10px] uppercase tracking-[0.24em] text-copper mb-5">
+        <span class="w-6 h-px bg-copper"></span>
+        Necə işləyirik
+      </div>
+      <h2 class="font-display font-normal text-[40px] md:text-[72px] leading-[.98] tracking-[-.015em] text-ink">
+        Dörd mərhələ.
+        <span class="italic-display text-ink/45">Qüsursuz</span> icra.
+      </h2>
+      <p class="mt-5 text-ink/60 text-[14px] md:text-[16px] leading-[1.6] max-w-lg">
+        Hər layihə xəyalınızdakı məkanı anlamaqla başlayır, açar təhvili ilə bitir.
+      </p>
+    </div>
+
+    <!-- Steps — compact: number + title inline, description below -->
+    <ol class="md:grid md:grid-cols-4 md:gap-8 md:divide-x md:divide-ink/10
+               divide-y md:divide-y-0 divide-ink/10
+               border-t border-b md:border-b-0 md:border-t-0 border-ink/10">
+
+      <li class="py-5 md:py-0 md:pl-6 md:first:pl-0 group">
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-[22px] md:text-[26px] text-copper leading-none shrink-0 tabular-nums">01</span>
+          <h3 class="font-display text-[22px] md:text-[26px] text-ink leading-tight">Kəşf</h3>
+        </div>
+        <p class="mt-2 text-[13px] md:text-[13.5px] text-ink/60 leading-[1.6] md:max-w-[260px]">
+          İstəklərinizi, həyat tərzinizi və məkanın potensialını dərindən analiz edirik.
+        </p>
+      </li>
+
+      <li class="py-5 md:py-0 md:pl-6 group">
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-[22px] md:text-[26px] text-copper leading-none shrink-0 tabular-nums">02</span>
+          <h3 class="font-display text-[22px] md:text-[26px] text-ink leading-tight">Layihələndirmə</h3>
+        </div>
+        <p class="mt-2 text-[13px] md:text-[13.5px] text-ink/60 leading-[1.6] md:max-w-[260px]">
+          3D vizualizasiya və dəqiq büdcə smetası. İdeyaları real konsepsiyaya çeviririk.
+        </p>
+      </li>
+
+      <li class="py-5 md:py-0 md:pl-6 group">
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-[22px] md:text-[26px] text-copper leading-none shrink-0 tabular-nums">03</span>
+          <h3 class="font-display text-[22px] md:text-[26px] text-ink leading-tight">İnşa etmək</h3>
+        </div>
+        <p class="mt-2 text-[13px] md:text-[13.5px] text-ink/60 leading-[1.6] md:max-w-[260px]">
+          Mütəmadi hesabatlar və tam şəffaflıq. Siz rahatlığınıza baxarkən, biz prosesi idarə edirik.
+        </p>
+      </li>
+
+      <li class="py-5 md:py-0 md:pl-6 group">
+        <div class="flex items-baseline gap-3">
+          <span class="font-display text-[22px] md:text-[26px] text-copper leading-none shrink-0 tabular-nums">04</span>
+          <h3 class="font-display text-[22px] md:text-[26px] text-ink leading-tight">Təhvil</h3>
+        </div>
+        <p class="mt-2 text-[13px] md:text-[13.5px] text-ink/60 leading-[1.6] md:max-w-[260px]">
+          Məkanınız yaşamağa hazırdır. 2 illik rəsmi zəmanət və ömürlük texniki dəstəyimizlə yanınızdayıq.
+        </p>
+      </li>
+
+    </ol>
+  </section>
+
+  <!-- ===== WHY US — cinematic hero, compact and fits viewport ===== -->
+  <section class="relative overflow-hidden flex items-center py-16 md:py-24">
+    <!-- Background image -->
+    <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1800&q=85"
+         alt="İdea İnşaat villa" loading="lazy"
+         class="absolute inset-0 w-full h-full object-cover" />
+    <!-- Dark atmospheric overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/75 to-petrol/85"></div>
+    <!-- Subtle grain -->
+    <div class="absolute inset-0 grain opacity-30 pointer-events-none"></div>
+
+    <div class="relative z-10 w-full px-5 md:px-10 text-center">
+      <div class="max-w-4xl mx-auto">
+        <!-- Label -->
+        <div class="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-copper mb-6 md:mb-8">
+          <span class="w-6 h-px bg-copper"></span>
+          Niyə biz?
+          <span class="w-6 h-px bg-copper"></span>
+        </div>
+
+        <!-- Cinematic headline — balanced, not overlapping -->
+        <h2 class="font-display font-normal text-[40px] md:text-[80px] leading-[1.08] tracking-[-.02em] text-cream">
+          13 il. 442 layihə.<br/>
+          <span class="italic-display text-copper">Sıfır</span> şikayət.
+        </h2>
+
+        <!-- Elegant italic subtitle -->
+        <p class="mt-5 md:mt-7 font-display italic-display text-cream/65 text-[15px] md:text-[19px] leading-[1.55] max-w-xl mx-auto">
+          35 nəfərlik komanda. Tək bir müqavilə. 2 il yazılı zəmanət.
+        </p>
+
+        <!-- CTAs -->
+        <div class="mt-8 md:mt-10 flex flex-wrap items-center justify-center gap-4 md:gap-5">
+          <a href="#elaqe" class="inline-flex items-center gap-2.5 bg-cream hover:bg-cream-soft text-ink rounded-full px-6 md:px-7 py-3 md:py-3.5 font-medium text-[13px] md:text-[14px] transition-colors">
+            Pulsuz konsultasiya
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </a>
+          <a href="#layiheler" class="text-cream/80 hover:text-copper text-[13px] md:text-[14px] font-medium inline-flex items-center gap-2 transition-colors">
+            <span class="border-b border-cream/25 pb-0.5">Layihələrə bax</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS ===== -->
+  <section id="layiheler" class="proj-section px-5 md:px-10 py-16 md:py-28">
+
+    <!-- Header -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 md:mb-16 items-end">
+      <div class="lg:col-span-7">
+        <div class="proj-eyebrow">Seçilmiş layihələr <span class="proj-side">06 / portfolio</span></div>
+        <h2 class="font-display text-4xl md:text-6xl leading-[1.04] text-ink mt-5 max-w-3xl">
+          442 layihə. <br class="hidden md:block"/><span class="italic-display text-petrol">Hər biri ayrı bir hekayə.</span>
+        </h2>
+        <p class="proj-deck">
+          Mərdəkan villasından Port Baku interyerinə — material, işıq və proporsiya
+          ilə qurulan <em>açar təhvili</em> işlərdən bir seçim.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bento gallery -->
+    <div class="proj-bento" id="projectsGrid">
+
+      <!-- 01 — Featured -->
+      <article class="project proj-v2 is-featured span-feat" data-cat="villa">
+        <div class="pv-img">
+          <span class="pv-num">01 / 06</span>
+          <span class="pv-cat">Villa · İnteryer</span>
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80" alt="Mərdəkan Villa — 480 m² müasir villa, 2025"/>
+          <span class="pv-feat">Seçilmiş · 2025</span>
+        </div>
+        <div class="pv-foot">
+          <div class="pv-info">
+            <h3 class="pv-title">Mərdəkan <span class="ti">Villa</span></h3>
+            <span class="pv-rule"></span>
+            <div class="pv-meta">
+              <span>Mərdəkan, Bakı</span>
+              <span class="dotsep"></span>
+              <span>480 m²</span>
+              <span class="dotsep"></span>
+              <span>8 ay</span>
+              <span class="dotsep"></span>
+              <span>2025</span>
+            </div>
+          </div>
+          <a href="#" class="pv-arrow" aria-label="Mərdəkan Villa layihəsinə bax">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 02 — Tall right -->
+      <article class="project proj-v2 span-tall" data-cat="menzil">
+        <div class="pv-img">
+          <span class="pv-num">02 / 06</span>
+          <span class="pv-cat">Mənzil</span>
+          <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80" alt="Port Baku Residence — 210 m² mənzil, 2024"/>
+        </div>
+        <div class="pv-foot">
+          <div class="pv-info">
+            <h3 class="pv-title">Port Baku <span class="ti">Residence</span></h3>
+            <span class="pv-rule"></span>
+            <div class="pv-meta">
+              <span>Bayıl</span>
+              <span class="dotsep"></span>
+              <span>210 m²</span>
+              <span class="dotsep"></span>
+              <span>2024</span>
+            </div>
+          </div>
+          <a href="#" class="pv-arrow" aria-label="Port Baku Residence layihəsinə bax">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 03 — Wide left -->
+      <article class="project proj-v2 span-wide" data-cat="restoran">
+        <div class="pv-img">
+          <span class="pv-num">03 / 06</span>
+          <span class="pv-cat">Restoran</span>
+          <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&q=80" alt="Şəhər Restoranı — 320 m² kommersiya interyer, 2024"/>
+        </div>
+        <div class="pv-foot">
+          <div class="pv-info">
+            <h3 class="pv-title">Şəhər <span class="ti">Restoranı</span></h3>
+            <span class="pv-rule"></span>
+            <div class="pv-meta">
+              <span>Səbail</span>
+              <span class="dotsep"></span>
+              <span>320 m²</span>
+              <span class="dotsep"></span>
+              <span>2024</span>
+            </div>
+          </div>
+          <a href="#" class="pv-arrow" aria-label="Şəhər Restoranı layihəsinə bax">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 04 — Mid right -->
+      <article class="project proj-v2 span-mid" data-cat="ofis">
+        <div class="pv-img">
+          <span class="pv-num">04 / 06</span>
+          <span class="pv-cat">Ofis</span>
+          <img src="https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=1200&q=80" alt="Crescent Ofis — 860 m² korporativ interyer, 2023"/>
+        </div>
+        <div class="pv-foot">
+          <div class="pv-info">
+            <h3 class="pv-title">Crescent <span class="ti">Ofis</span></h3>
+            <span class="pv-rule"></span>
+            <div class="pv-meta">
+              <span>Səbail</span>
+              <span class="dotsep"></span>
+              <span>860 m²</span>
+              <span class="dotsep"></span>
+              <span>2023</span>
+            </div>
+          </div>
+          <a href="#" class="pv-arrow" aria-label="Crescent Ofis layihəsinə bax">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 05 — Wide -->
+      <article class="project proj-v2 span-wide" data-cat="menzil">
+        <div class="pv-img">
+          <span class="pv-num">05 / 06</span>
+          <span class="pv-cat">Mənzil</span>
+          <img src="https://images.unsplash.com/photo-1615529162924-f8605388461d?w=1400&q=80" alt="White City Residence — 145 m² mənzil, 2023"/>
+        </div>
+        <div class="pv-foot">
+          <div class="pv-info">
+            <h3 class="pv-title">White City <span class="ti">Residence</span></h3>
+            <span class="pv-rule"></span>
+            <div class="pv-meta">
+              <span>Yasamal</span>
+              <span class="dotsep"></span>
+              <span>145 m²</span>
+              <span class="dotsep"></span>
+              <span>2023</span>
+            </div>
+          </div>
+          <a href="#" class="pv-arrow" aria-label="White City Residence layihəsinə bax">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- 06 — Mid -->
+      <article class="project proj-v2 span-mid" data-cat="villa">
+        <div class="pv-img">
+          <span class="pv-num">06 / 06</span>
+          <span class="pv-cat">Villa</span>
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80" alt="Bilgəh Villa — 620 m² müasir villa, 2023"/>
+        </div>
+        <div class="pv-foot">
+          <div class="pv-info">
+            <h3 class="pv-title">Bilgəh <span class="ti">Villa</span></h3>
+            <span class="pv-rule"></span>
+            <div class="pv-meta">
+              <span>Bilgəh</span>
+              <span class="dotsep"></span>
+              <span>620 m²</span>
+              <span class="dotsep"></span>
+              <span>2023</span>
+            </div>
+          </div>
+          <a href="#" class="pv-arrow" aria-label="Bilgəh Villa layihəsinə bax">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Footer CTA -->
+    <div class="mt-12 md:mt-16 flex justify-center">
+      <a href="#" class="proj-cta">
+        Bütün arxiv
+        <span class="proj-cta-count">442 layihə</span>
+        <span class="cta-arrow">
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIAL ===== -->
+  <section id="rey" class="bg-petrol text-cream px-5 md:px-10 py-12 md:py-16">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-center justify-center gap-3 mb-5">
+        <span class="h-px w-6 bg-copper/60"></span>
+        <span class="text-[10px] uppercase tracking-[0.28em] text-copper font-semibold">Müştərilərimiz</span>
+        <span class="h-px w-6 bg-copper/60"></span>
+      </div>
+      <blockquote class="font-display text-xl md:text-3xl lg:text-[34px] leading-[1.3] text-center text-cream/95">
+        <span class="text-copper">“</span>Mən ev istəmirdim.
+        Onlar mənə bir <span class="italic-display">səhər</span> verdilər —
+        pəncərədən düşən ilk işıqla birlikdə.<span class="text-copper">”</span>
+      </blockquote>
+      <div class="mt-6 flex items-center justify-center gap-3">
+        <img src="https://i.pravatar.cc/80?img=47" alt="" class="w-9 h-9 rounded-full object-cover border border-copper/60"/>
+        <div class="text-left">
+          <div class="font-medium text-[13px] leading-tight">Lalə Məmmədova</div>
+          <div class="text-cream/55 text-[11px] leading-tight mt-0.5">Villa sahibi · Mərdəkan, 2024</div>
+        </div>
+      </div>
+
+      <!-- Mini pager -->
+      <div class="mt-6 flex items-center justify-center gap-2 text-cream/55 text-[11px] tracking-[0.12em]">
+        <button class="w-8 h-8 rounded-full border border-cream/15 flex items-center justify-center hover:bg-cream hover:text-petrol transition">
+          <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M14 8H2M2 8L8 2M2 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <span class="px-1">01 / 12</span>
+        <button class="w-8 h-8 rounded-full border border-cream/15 flex items-center justify-center hover:bg-cream hover:text-petrol transition">
+          <svg width="10" height="10" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA / CONTACT ===== -->
+  <section id="elaqe" class="px-5 md:px-10 py-16 md:py-28">
+    <div class="grid md:grid-cols-2 gap-10 md:gap-16">
+      <div>
+        <div class="text-xs uppercase tracking-[0.22em] text-copper mb-4">Gəl, tanış olaq</div>
+        <h2 class="font-display text-4xl md:text-6xl leading-[1.05] text-ink">
+          Sənin layihənin <br/>
+          <span class="italic-display">ilk günü</span> —<br/>
+          bu gün ola bilər.
+        </h2>
+        <p class="mt-6 text-ink/70 text-[15px] md:text-lg max-w-lg">
+          Pulsuz 30 dəqiqəlik konsultasiyaya yaz. Məkanı, büdcəni,
+          xəyalını danış — biz qalanına baxarıq.
+        </p>
+
+        <div class="mt-10 space-y-4 text-lg">
+          <a href="mailto:salam@ideainsaat.az" class="flex items-center gap-3 text-ink hover:text-copper transition">
+            <span class="w-11 h-11 rounded-full bg-ink/5 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 7L12 13L21 7M3 7V17C3 18.1 3.9 19 5 19H19C20.1 19 21 18.1 21 17V7M3 7C3 5.9 3.9 5 5 5H19C20.1 5 21 5.9 21 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            salam@ideainsaat.az
+          </a>
+          <a href="tel:+994505550415" class="flex items-center gap-3 text-ink hover:text-copper transition">
+            <span class="w-11 h-11 rounded-full bg-ink/5 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 16.92V19.92C22 20.52 21.52 21 20.92 21C10.43 21 2 12.57 2 2.08C2 1.48 2.48 1 3.08 1H6.08C6.68 1 7.16 1.48 7.16 2.08C7.16 3.56 7.42 4.98 7.9 6.3C8.04 6.68 7.94 7.12 7.64 7.42L5.9 9.16C7.36 12.04 9.96 14.64 12.84 16.1L14.58 14.36C14.88 14.06 15.32 13.96 15.7 14.1C17.02 14.58 18.44 14.84 19.92 14.84C20.52 14.84 21 15.32 21 15.92" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            +994 50 555 04 15
+          </a>
+          <a href="#" class="flex items-center gap-3 text-ink hover:text-copper transition">
+            <span class="w-11 h-11 rounded-full bg-ink/5 flex items-center justify-center">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C7.58 2 4 5.58 4 10C4 15 12 22 12 22S20 15 20 10C20 5.58 16.42 2 12 2ZM12 12.5C10.62 12.5 9.5 11.38 9.5 10C9.5 8.62 10.62 7.5 12 7.5C13.38 7.5 14.5 8.62 14.5 10C14.5 11.38 13.38 12.5 12 12.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </span>
+            Bakı, Nizami küç. 203
+          </a>
+        </div>
+
+        <div class="mt-8 flex gap-3">
+          <a href="#" aria-label="Instagram" class="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="WhatsApp" class="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 4C16.1 0.1 9.9 0.1 6 4C2.1 7.9 1.4 13.9 4.2 18.6L3 22L6.6 20.9C11.3 23.5 17.1 22.6 20.9 18.8C24.7 15 24.7 8.9 20 4Z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M14 2H17V5H14C13.4 5 13 5.4 13 6V8H17L16 12H13V22H9V12H6V8H9V6C9 3.8 10.8 2 13 2H14Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <form class="bg-cream-warm/60 rounded-3xl p-6 md:p-8 space-y-4">
+        <div>
+          <label class="text-xs uppercase tracking-[0.2em] text-muted">Adın</label>
+          <input type="text" placeholder="Fuad Bağıyev" class="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink placeholder:text-muted/50 outline-none"/>
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-[0.2em] text-muted">Telefon</label>
+          <input type="tel" placeholder="+994 __ ___ __ __" class="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink placeholder:text-muted/50 outline-none"/>
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-[0.2em] text-muted">Xidmət</label>
+          <select class="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink outline-none">
+            <option>Dizayn</option>
+            <option>Tikinti</option>
+            <option>Mebel</option>
+            <option>Eksteryer</option>
+            <option>Landşaft</option>
+            <option>Hələ bilmirəm</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs uppercase tracking-[0.2em] text-muted">Layihə haqqında</label>
+          <textarea rows="3" placeholder="Məkanın ölçüsü, tipi, xəyalın..." class="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink placeholder:text-muted/50 outline-none resize-none"></textarea>
+        </div>
+        <button type="button" class="btn-copper bg-copper text-cream w-full py-4 rounded-full text-[15px] font-medium mt-2 inline-flex items-center justify-center gap-2">
+          Sorğu göndər
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </button>
+        <p class="text-xs text-muted/70 text-center">24 saat ərzində zəng edirik.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-ink text-cream px-5 md:px-10 py-12 md:py-16">
+    <div class="grid md:grid-cols-4 gap-10">
+      <div class="md:col-span-2">
+        <div class="flex items-center gap-2 text-cream" aria-label="İdea İnşaat">
+          <svg viewBox="0 0 643 615" class="h-14 w-auto" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M64.1328 271.06V424.804V425.073L96.2751 406.516V288.06L151.142 252.906V375.474L182.628 357.296V109.013L235.598 74.0373V326.918L266.382 309.145V53.9614L318.141 17.7307L295.212 0L151.142 92.9784V215.656L64.1328 271.06Z" opacity=".7"/>
+            <path d="M461.034 250.539L400.945 316.488V460.068H403.302H461.034V250.539Z"/>
+            <path d="M485.223 460.487V246.377L546.353 289.086V460.487H485.223Z"/>
+            <path d="M318.141 279.86V17.7373L378.19 54.6772V245.572L318.141 279.86Z"/>
+            <path d="M464.107 110.145L404.648 70.3494V230.854L464.107 196.525V110.145Z"/>
+            <path d="M317.764 460.068V408.698L379.266 339.89V460.068H317.764Z"/>
+            <path d="M270.129 460.068H217.063L461.038 250.542L270.129 460.068Z" opacity=".7"/>
+            <path d="M574.941 132.349L0 460.487L64.1765 458.315L574.941 132.349Z" opacity=".7"/>
+            <path d="M165.258 451.32C165.258 447.133 164.996 443.796 164.473 441.309C164.08 438.823 163.099 436.86 161.528 435.421C159.958 433.981 157.734 433 154.855 432.476C151.976 431.953 148.181 431.56 143.47 431.299V426.784H210.012V431.299C205.301 431.429 201.506 431.822 198.627 432.476C195.748 433 193.524 433.981 191.953 435.421C190.383 436.86 189.336 438.888 188.813 441.506C188.289 443.992 188.027 447.263 188.027 451.32V551.035C188.027 555.092 188.289 558.428 188.813 561.046C189.467 563.532 190.579 565.495 192.15 566.934C193.72 568.374 195.944 569.421 198.823 570.075C201.702 570.598 205.432 570.926 210.012 571.056V575.178H143.47V571.056C148.181 570.926 151.976 570.598 154.855 570.075C157.734 569.421 159.893 568.374 161.332 566.934C162.902 565.495 163.949 563.532 164.473 561.046C164.996 558.559 165.258 555.222 165.258 551.035V451.32ZM238.042 491.374C238.042 488.54 237.909 486.283 237.644 484.6C237.378 482.918 236.758 481.634 235.784 480.749C234.899 479.775 233.571 479.111 231.8 478.757C230.118 478.402 227.771 478.093 224.761 477.827V474.772H265.667C275.141 474.772 283.641 475.923 291.167 478.225C298.693 480.439 305.024 483.671 310.159 487.921C315.383 492.171 319.368 497.395 322.112 503.593C324.857 509.79 326.23 516.785 326.23 524.577C326.23 532.28 324.769 539.452 321.847 546.093C318.925 552.733 314.808 558.311 309.495 562.827C304.802 566.723 298.737 569.777 291.3 571.991C283.951 574.116 276.071 575.178 267.659 575.178H224.761V572.389C227.683 572.212 229.985 571.947 231.667 571.593C233.438 571.15 234.766 570.441 235.651 569.468C236.625 568.405 237.245 567.033 237.511 565.35C237.865 563.668 238.042 561.499 238.042 558.843V491.374ZM253.448 563.358C253.448 565.837 253.98 567.52 255.042 568.405C256.193 569.202 258.23 569.6 261.151 569.6C267.969 569.6 273.68 569.158 278.284 568.272C282.977 567.298 287.271 565.66 291.167 563.358C303.563 556.275 309.761 543.702 309.761 525.639C309.761 517.316 308.167 509.923 304.98 503.46C301.881 496.996 297.276 491.728 291.167 487.655C287.448 485.176 283.154 483.361 278.284 482.21C273.503 481.059 267.792 480.483 261.151 480.483C258.141 480.483 256.105 480.882 255.042 481.678C253.98 482.475 253.448 484.025 253.448 486.327V563.358ZM422.28 575.178H340.467V572.389C343.212 572.212 345.425 571.902 347.108 571.46C348.879 571.017 350.207 570.309 351.092 569.335C352.066 568.361 352.73 567.033 353.084 565.35C353.438 563.668 353.616 561.499 353.616 558.843V491.374C353.616 488.718 353.438 486.548 353.084 484.866C352.819 483.184 352.199 481.856 351.225 480.882C350.251 479.908 348.879 479.199 347.108 478.757C345.425 478.314 343.212 478.004 340.467 477.827V474.772H420.951L421.217 496.553H417.631C416.923 493.1 416.126 490.356 415.241 488.319C414.355 486.194 413.071 484.556 411.389 483.405C409.795 482.254 407.626 481.501 404.881 481.147C402.225 480.793 398.772 480.616 394.522 480.616H374.069C372.032 480.616 370.66 480.926 369.951 481.546C369.332 482.165 369.022 483.582 369.022 485.796V519.397H392.264C395.363 519.397 397.886 519.22 399.834 518.866C401.782 518.512 403.332 517.848 404.483 516.874C405.722 515.811 406.652 514.35 407.272 512.491C407.892 510.632 408.467 508.152 408.998 505.053H412.584V540.249H408.998C408.467 537.061 407.892 534.538 407.272 532.678C406.652 530.731 405.767 529.27 404.616 528.296C403.464 527.233 401.915 526.525 399.967 526.171C398.019 525.816 395.451 525.639 392.264 525.639H369.022V563.093C369.022 564.598 369.11 565.705 369.287 566.413C369.464 567.121 369.774 567.652 370.217 568.007C370.925 568.449 372.608 568.848 375.264 569.202C378.009 569.468 381.241 569.6 384.959 569.6H389.209C394.61 569.6 399.126 569.335 402.756 568.803C406.475 568.272 409.618 567.254 412.186 565.749C414.842 564.244 417.144 562.207 419.092 559.639C421.04 557.072 422.944 553.707 424.803 549.546H429.186L422.28 575.178ZM545.291 575.178H506.642V572.389C507.97 572.389 509.077 572.389 509.962 572.389C510.848 572.301 511.556 572.212 512.087 572.124C512.707 571.947 513.238 571.814 513.681 571.725C514.124 571.548 514.567 571.327 515.009 571.061C515.718 570.619 516.249 570.087 516.603 569.468C517.046 568.759 517.267 568.051 517.267 567.343C517.267 564.863 516.293 561.41 514.345 556.983L507.97 542.507H468.392L461.353 560.171C460.999 561.145 460.689 562.163 460.423 563.225C460.246 564.199 460.158 565.173 460.158 566.147C460.158 568.184 460.955 569.733 462.548 570.796C464.142 571.858 466.798 572.389 470.517 572.389V575.178H440.369V572.389C442.228 572.301 443.822 571.991 445.15 571.46C446.478 570.928 447.806 569.822 449.134 568.139C450.462 566.369 451.879 563.889 453.384 560.702C454.978 557.426 456.97 552.999 459.361 547.421L490.837 473.046H493.759L531.611 559.108C532.85 561.941 533.913 564.199 534.798 565.882C535.772 567.564 536.746 568.892 537.72 569.866C538.694 570.751 539.757 571.371 540.908 571.725C542.147 572.08 543.608 572.301 545.291 572.389V575.178ZM505.978 536.397L488.447 494.561L470.916 536.397H505.978Z"/>
+          </svg>
+        </div>
+        <p class="mt-4 text-cream/60 text-sm max-w-md">
+          Bakıda 2026-cı ildən. Dizayn, tikinti, mebel, eksteryer və landşaft — bir komanda altında.
+        </p>
+      </div>
+
+      <div>
+        <div class="text-xs uppercase tracking-[0.22em] text-cream/50 mb-4">Xidmətlər</div>
+        <ul class="space-y-2 text-sm text-cream/80">
+          <li><a href="#" class="hover:text-copper">Dizayn</a></li>
+          <li><a href="#" class="hover:text-copper">Tikinti</a></li>
+          <li><a href="#" class="hover:text-copper">Mebel</a></li>
+          <li><a href="#" class="hover:text-copper">Eksteryer</a></li>
+          <li><a href="#" class="hover:text-copper">Landşaft</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="text-xs uppercase tracking-[0.22em] text-cream/50 mb-4">Şirkət</div>
+        <ul class="space-y-2 text-sm text-cream/80">
+          <li><a href="#" class="hover:text-copper">Haqqımızda</a></li>
+          <li><a href="#" class="hover:text-copper">Layihələr</a></li>
+          <li><a href="#" class="hover:text-copper">Karyera</a></li>
+          <li><a href="#" class="hover:text-copper">Əlaqə</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 pt-6 border-t border-cream/10 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-cream/40">
+      <span>© 2026 İdea İnşaat MMC. Bütün hüquqlar qorunur.</span>
+      <div class="flex gap-5">
+        <a href="#" class="hover:text-copper">AZ</a>
+        <a href="#" class="hover:text-copper">EN</a>
+        <a href="#" class="hover:text-copper">RU</a>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Sticky mobile CTA — refined glass dock -->
+<div class="sticky-cta">
+  <a href="tel:+994505550415" aria-label="Zəng et"
+     class="btn-tap flex-1 bg-petrol/95 hover:bg-petrol-deep text-cream rounded-full py-3 text-center text-[13px] font-medium flex items-center justify-center gap-2 transition-transform">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 16.92V19.92C22 20.52 21.52 21 20.92 21C10.43 21 2 12.57 2 2.08C2 1.48 2.48 1 3.08 1H6.08C6.68 1 7.16 1.48 7.16 2.08C7.16 3.56 7.42 4.98 7.9 6.3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Zəng et
+  </a>
+  <a href="#elaqe"
+     class="btn-tap flex-1 bg-copper hover:bg-copper-deep text-cream rounded-full py-3 text-center text-[13px] font-medium flex items-center justify-center gap-2 transition-transform">
+    Konsultasiya
+    <svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+  </a>
+</div>
+
+<script>
+  // Mobile nav
+  const toggle = document.getElementById('navToggle');
+  const overlay = document.getElementById('navOverlay');
+  const closeBtn = document.getElementById('navClose');
+  toggle?.addEventListener('click', () => overlay.classList.add('open'));
+  closeBtn?.addEventListener('click', () => overlay.classList.remove('open'));
+  document.querySelectorAll('#navOverlay a').forEach(a => a.addEventListener('click', () => overlay.classList.remove('open')));
+
+  // Nav subtle shadow after a little scroll
+  const siteNav = document.getElementById('siteNav');
+  const setNavState = () => {
+    if (window.scrollY > 10) siteNav.classList.add('is-scrolled');
+    else siteNav.classList.remove('is-scrolled');
+  };
+  setNavState();
+  window.addEventListener('scroll', setNavState, { passive: true });
+
+  // Hero service pills (visual toggle only for demo)
+  document.querySelectorAll('.pill-svc').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.pill-svc').forEach(x => x.classList.remove('is-active'));
+      p.classList.add('is-active');
+    });
+  });
+
+  // Services horizontal scroll buttons
+  const scroller = document.getElementById('servicesScroll');
+  document.querySelectorAll('.scroll-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const dir = parseInt(btn.dataset.dir);
+      scroller.scrollBy({ left: dir * 360, behavior: 'smooth' });
+    });
+  });
+
+  // Project filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const projects = document.querySelectorAll('.project');
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => {
+        b.classList.remove('active', 'bg-ink', 'text-cream');
+        b.classList.add('text-ink');
+      });
+      btn.classList.add('active', 'bg-ink', 'text-cream');
+      btn.classList.remove('text-ink');
+      const f = btn.dataset.filter;
+      projects.forEach(p => {
+        p.style.display = (f === 'all' || p.dataset.cat === f) ? '' : 'none';
+      });
+    });
+  });
+
+  // Reveal on scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Custom cursor (desktop only)
+  const cursor = document.getElementById('cursor');
+  if (cursor && window.innerWidth >= 1024) {
+    window.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.querySelectorAll('a, button, .proj-card, .proj-v2').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+  }
+</script>
+
+</body>
+</html>
