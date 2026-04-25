@@ -295,6 +295,515 @@
   .no-scrollbar { scrollbar-width: none; }
 
   /* ============================================================
+     APP LOADER — architectural construction sequence
+     Logo paths animate in sequence: blueprint beams → stairs
+     outline → columns rise → wordmark assembles → exit
+     ============================================================ */
+  body.is-loading { overflow: hidden; }
+
+  #appLoader {
+    position: fixed; inset: 0; z-index: 200;
+    background: #1A3A46;
+    display: flex; align-items: center; justify-content: center;
+    transition: clip-path 1.05s cubic-bezier(.77,0,.18,1),
+                opacity .55s ease .85s,
+                visibility 0s linear 1.6s;
+    clip-path: inset(0 0 0 0);
+  }
+  #appLoader.is-done {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+    visibility: hidden;
+  }
+  /* Subtle blueprint grid behind loader */
+  #appLoader::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,241,234,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,241,234,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+  #appLoader::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(80% 60% at 50% 40%, rgba(180,117,72,.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .loader-stage {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    z-index: 2;
+  }
+
+  .loader-svg {
+    display: block; overflow: visible;
+    width: 180px; height: 172px;
+  }
+  @media (min-width: 768px) {
+    .loader-svg { width: 220px; height: 210px; }
+  }
+
+  .lp { transform-box: fill-box; }
+
+  /* Diagonal architectural beams — drawn first */
+  .lp-beam {
+    fill: transparent;
+    stroke: #B47548;
+    stroke-width: 1.6;
+    stroke-linejoin: miter;
+    stroke-dasharray: 1400;
+    stroke-dashoffset: 1400;
+    animation: drawLine 1s cubic-bezier(.65,0,.2,1) forwards;
+  }
+  .lp-beam.b1 { animation-delay: .05s; }
+  .lp-beam.b2 { animation-delay: .22s; }
+
+  /* Stairs — outline draws, then fills */
+  .lp-stairs {
+    fill: rgba(245,241,234,.0);
+    stroke: rgba(245,241,234,.7);
+    stroke-width: 1.4;
+    stroke-dasharray: 2400;
+    stroke-dashoffset: 2400;
+    animation:
+      drawLine 1.3s cubic-bezier(.65,0,.2,1) .35s forwards,
+      stairFill .7s ease 1.45s forwards;
+  }
+
+  /* Columns — rise from bottom */
+  .lp-col {
+    fill: #F5F1EA;
+    transform-origin: 50% 100%;
+    transform: scaleY(0);
+    animation: rise .55s cubic-bezier(.5,-.1,.2,1.05) forwards;
+  }
+  .lp-col.c1 { animation-delay: 1.00s; }
+  .lp-col.c2 { animation-delay: 1.10s; }
+  .lp-col.c3 { animation-delay: 1.20s; }
+  .lp-col.c4 { animation-delay: 1.30s; }
+  .lp-col.c5 { animation-delay: 1.40s; }
+
+  /* Wordmark — Playfair italic */
+  .loader-word {
+    margin-top: 26px;
+    position: relative;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 500;
+    font-size: 28px;
+    letter-spacing: .2em;
+    color: #F5F1EA;
+    display: flex; align-items: baseline; gap: .14em;
+    line-height: 1;
+  }
+  @media (min-width: 768px) {
+    .loader-word { font-size: 34px; margin-top: 32px; }
+  }
+  .lw-letter {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(14px);
+    animation: letterIn .6s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .lw-letter:nth-child(1) { animation-delay: 1.65s; }
+  .lw-letter:nth-child(2) { animation-delay: 1.74s; }
+  .lw-letter:nth-child(3) { animation-delay: 1.83s; }
+  .lw-letter:nth-child(4) { animation-delay: 1.92s; }
+  .lw-sub {
+    display: block;
+    margin-top: 12px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: #B47548;
+    opacity: 0;
+    transform: translateY(8px);
+    animation: subIn .7s cubic-bezier(.2,.7,.2,1) 2.05s forwards;
+    text-align: center;
+  }
+
+  /* Hairline progress bar */
+  .loader-bar {
+    margin-top: 22px;
+    width: 160px;
+    height: 1px;
+    background: rgba(245,241,234,.12);
+    position: relative; overflow: hidden;
+  }
+  .loader-bar::after {
+    content: "";
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, transparent, #B47548 40%, #F5F1EA 70%, transparent);
+    animation: barFill 2.4s cubic-bezier(.45,.05,.2,1) forwards;
+  }
+
+  /* Tiny corner credit — top-left + bottom-right */
+  .loader-tag {
+    position: fixed; z-index: 3;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 11px;
+    color: rgba(245,241,234,.4);
+    letter-spacing: .04em;
+    opacity: 0;
+    animation: tagIn .8s ease .25s forwards;
+  }
+  .loader-tag.lt-tl { top: 22px; left: 22px; }
+  .loader-tag.lt-br { bottom: 22px; right: 22px; }
+  .loader-tag::before, .loader-tag::after {
+    content: ""; display: inline-block; width: 18px; height: 1px;
+    background: rgba(180,117,72,.55); vertical-align: middle;
+  }
+  .loader-tag.lt-tl::before { margin-right: 10px; }
+  .loader-tag.lt-br::after { margin-left: 10px; }
+  .loader-tag.lt-tl::after, .loader-tag.lt-br::before { display: none; }
+
+  @keyframes drawLine    { to { stroke-dashoffset: 0; } }
+  @keyframes stairFill   { to { fill: rgba(245,241,234,.18); } }
+  @keyframes rise        { to { transform: scaleY(1); } }
+  @keyframes letterIn    { to { opacity: 1; transform: none; } }
+  @keyframes subIn       { to { opacity: 1; transform: none; } }
+  @keyframes barFill     { 0% { width: 0; } 100% { width: 100%; } }
+  @keyframes tagIn       { to { opacity: 1; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    #appLoader, .lp, .lw-letter, .lw-sub, .loader-bar::after, .loader-tag {
+      animation-duration: .1s !important;
+      animation-delay: 0s !important;
+    }
+  }
+
+  /* ============================================================
+     APP LOADER — VARIATION B: "ATELIER · Blueprint to Reality"
+     Premium architectural choreography with dimension callouts,
+     stroke-then-fill logo, live percentage counter, and a
+     three-panel curtain reveal. Dramatic, refined, WOW-grade.
+     ============================================================ */
+  /* Toggle: body[data-loader="a"] shows old loader, default = B */
+  #appLoader, #appLoaderB { display: none; }
+  body[data-loader="a"] #appLoader  { display: flex; }
+  body[data-loader="b"] #appLoaderB,
+  body:not([data-loader]) #appLoaderB { display: flex; }
+
+  #appLoaderB {
+    position: fixed; inset: 0; z-index: 200;
+    background: #08121a;
+    color: #F5F1EA;
+    overflow: hidden;
+    align-items: center; justify-content: center;
+    transition: opacity .6s ease 1.2s, visibility 0s linear 1.8s;
+  }
+  #appLoaderB.is-done {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  /* Blueprint grid bg + copper aurora */
+  .lb-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,241,234,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,241,234,.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 80% 70% at center, #000 30%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 80% 70% at center, #000 30%, transparent 78%);
+    opacity: 0;
+    animation: lbGridIn .9s ease .15s forwards;
+  }
+  .lb-aurora {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 50% 45%, rgba(180,117,72,.18) 0%, transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(39,81,97,.35) 0%, transparent 70%);
+    opacity: 0;
+    animation: lbAuroraIn 1.2s ease .25s forwards;
+  }
+
+  /* Corner architectural marks — appear after stage */
+  .lb-corner {
+    position: absolute; z-index: 2;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px; letter-spacing: .22em;
+    color: rgba(245,241,234,.45);
+    opacity: 0;
+    animation: lbCornerIn .8s ease .55s forwards;
+  }
+  .lb-corner em { font-style: italic; color: rgba(180,117,72,.85); letter-spacing: .04em; }
+  .lb-corner.lb-tl { top: 28px; left: 28px; display: flex; align-items: center; gap: 10px; }
+  .lb-corner.lb-tl .lb-cornerLabel {
+    font-style: italic; font-size: 14px; color: #B47548; letter-spacing: 0;
+  }
+  .lb-corner.lb-tl .lb-compass {
+    color: rgba(180,117,72,.7);
+    transform: rotate(0);
+    animation: lbCompassSpin 16s linear infinite;
+  }
+  .lb-corner.lb-tr { top: 28px; right: 28px; text-align: right; line-height: 1.6; }
+  .lb-corner.lb-bl { bottom: 28px; left: 28px; line-height: 1.6; }
+  .lb-corner.lb-br { bottom: 28px; right: 28px; text-align: right; line-height: 1.6; }
+  @media (max-width: 640px) {
+    .lb-corner { font-size: 9px; letter-spacing: .18em; }
+    .lb-corner.lb-tl, .lb-corner.lb-tr, .lb-corner.lb-bl, .lb-corner.lb-br {
+      top: 16px; left: 16px; right: auto; bottom: auto;
+    }
+    .lb-corner.lb-tr { top: 16px; right: 16px; left: auto; }
+    .lb-corner.lb-bl { bottom: 16px; left: 16px; top: auto; }
+    .lb-corner.lb-br { bottom: 16px; right: 16px; top: auto; left: auto; }
+  }
+
+  /* Stage */
+  .lb-stage {
+    position: relative; z-index: 3;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 14px;
+  }
+
+  /* Dimension callouts (top/bottom of logo) */
+  .lb-dim {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px; letter-spacing: .32em;
+    color: rgba(180,117,72,.8);
+    opacity: 0;
+    transform: translateY(4px);
+    animation: lbDimIn .6s ease .85s forwards;
+  }
+  .lb-dim-bot { animation-delay: 1.0s; }
+  .lb-dim .lb-tick {
+    width: 50px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(180,117,72,.7), rgba(180,117,72,.7));
+  }
+  .lb-dim .lb-tick:last-child {
+    background: linear-gradient(90deg, rgba(180,117,72,.7), rgba(180,117,72,.7), transparent);
+  }
+  .lb-dim .lb-tick::before, .lb-dim .lb-tick::after {
+    content: ""; display: inline-block; width: 1px; height: 6px;
+    background: rgba(180,117,72,.7); vertical-align: middle;
+  }
+  .lb-dim .lb-tick::before { float: left; margin-top: -3px; }
+  .lb-dim .lb-tick::after  { float: right; margin-top: -3px; }
+
+  /* Concentric framing squares behind logo */
+  .lb-frames {
+    position: absolute; top: 50%; left: 50%;
+    width: 280px; height: 280px;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .lb-frame {
+    position: absolute; inset: 0;
+    border: 1px solid rgba(180,117,72,.18);
+    transform: scale(0) rotate(0);
+    opacity: 0;
+    animation: lbFrameIn 1s cubic-bezier(.6,0,.2,1) forwards;
+  }
+  .lb-frame.f1 { animation-delay: .35s; }
+  .lb-frame.f2 { inset: -28px; animation-delay: .50s; opacity: 0; }
+  .lb-frame.f3 { inset: -56px; animation-delay: .65s; opacity: 0; }
+  @media (min-width: 768px) {
+    .lb-frames { width: 340px; height: 340px; }
+  }
+
+  /* Logo SVG */
+  .lb-logo {
+    position: relative;
+    display: block;
+    width: 160px; height: 116px;
+    margin: 6px 0 4px;
+  }
+  @media (min-width: 768px) {
+    .lb-logo { width: 200px; height: 146px; }
+  }
+  .lbp {
+    fill: transparent;
+    stroke: rgba(245,241,234,.85);
+    stroke-width: 1.4;
+    stroke-linejoin: miter;
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+    animation:
+      lbDraw .9s cubic-bezier(.6,0,.25,1) forwards,
+      lbFill .55s ease forwards;
+  }
+  .lbp.p1 { animation-delay: 1.05s, 1.85s; stroke: rgba(180,117,72,.95); --fill: rgba(180,117,72,.6); }
+  .lbp.p2 { animation-delay: 1.18s, 1.95s; stroke: rgba(180,117,72,.95); --fill: rgba(180,117,72,.5); }
+  .lbp.p3 { animation-delay: 1.30s, 2.05s; --fill: rgba(245,241,234,.92); }
+  .lbp.p4 { animation-delay: 1.42s, 2.15s; --fill: #F5F1EA; }
+  .lbp.p5 { animation-delay: 1.50s, 2.20s; --fill: #F5F1EA; }
+  .lbp.p6 { animation-delay: 1.58s, 2.25s; --fill: #F5F1EA; }
+  .lbp.p7 { animation-delay: 1.66s, 2.30s; --fill: #F5F1EA; }
+  .lbp.p8 { animation-delay: 1.74s, 2.35s; --fill: #F5F1EA; }
+
+  /* Wordmark */
+  .lb-word {
+    margin-top: 16px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .lb-rule {
+    display: block; height: 1px;
+    width: 0;
+    background: rgba(245,241,234,.4);
+    animation: lbRule .8s cubic-bezier(.6,0,.2,1) 2.45s forwards;
+  }
+  .lb-letters {
+    display: inline-flex; align-items: baseline; gap: 4px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: .18em;
+    color: #F5F1EA;
+    line-height: 1;
+  }
+  @media (min-width: 768px) {
+    .lb-letters { font-size: 30px; }
+  }
+  .lb-l {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(10px) scale(1.3);
+    filter: blur(6px);
+    animation: lbLetterIn .55s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  .lb-l:nth-child(1) { animation-delay: 2.55s; }
+  .lb-l:nth-child(2) { animation-delay: 2.63s; }
+  .lb-l:nth-child(3) { animation-delay: 2.71s; }
+  .lb-l:nth-child(4) { animation-delay: 2.79s; }
+  .lb-bullet {
+    color: #B47548; font-size: 18px;
+    opacity: 0;
+    transform: scale(0);
+    animation: lbBulletIn .5s cubic-bezier(.2,.7,.2,1.5) 2.95s forwards;
+  }
+  .lb-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: .35em;
+    color: rgba(245,241,234,.7);
+    opacity: 0;
+    transform: translateX(-6px);
+    animation: lbSubIn .6s cubic-bezier(.2,.7,.2,1) 3.05s forwards;
+  }
+
+  /* Progress with live percentage */
+  .lb-progress {
+    margin-top: 26px;
+    display: flex; align-items: center; gap: 14px;
+    font-family: 'Playfair Display', serif;
+    font-size: 11px; letter-spacing: .22em;
+    color: rgba(245,241,234,.55);
+    opacity: 0;
+    animation: lbProgIn .6s ease 1.2s forwards;
+  }
+  .lb-counter {
+    font-style: italic; font-size: 13px;
+    color: #B47548;
+    min-width: 30px;
+    font-variant-numeric: tabular-nums;
+  }
+  .lb-counter::after { content: "%"; opacity: .55; margin-left: 2px; font-size: 9px; vertical-align: 4px; }
+  .lb-bar {
+    display: block; width: 140px; height: 1px;
+    background: rgba(245,241,234,.12);
+    position: relative; overflow: hidden;
+  }
+  .lb-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, transparent, #B47548, #F5F1EA);
+    animation: lbFillBar 3.6s cubic-bezier(.4,.05,.2,1) forwards;
+  }
+  .lb-status {
+    font-style: italic; font-size: 10.5px;
+    color: rgba(245,241,234,.45);
+    text-transform: uppercase;
+    letter-spacing: .2em;
+  }
+
+  /* Curtain reveal — three vertical panels */
+  .lb-curtain {
+    position: absolute; top: 0; bottom: 0;
+    width: 33.34%;
+    background: linear-gradient(180deg, #08121a 0%, #08121a 70%, rgba(8,18,26,0) 100%);
+    transform: translateY(0);
+    z-index: 1;
+    pointer-events: none;
+    transition: transform 1.2s cubic-bezier(.77,0,.18,1);
+  }
+  .lb-curtain.c1 { left: 0; }
+  .lb-curtain.c2 { left: 33.33%; }
+  .lb-curtain.c3 { left: 66.66%; }
+  .lb-curtain::before {
+    content: ""; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(180,117,72,.85), transparent);
+    box-shadow: 0 0 12px rgba(180,117,72,.5);
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  #appLoaderB.is-done .lb-curtain.c1 { transform: translateY(-100%); transition-delay: 0s; }
+  #appLoaderB.is-done .lb-curtain.c2 { transform: translateY(-100%); transition-delay: .12s; }
+  #appLoaderB.is-done .lb-curtain.c3 { transform: translateY(-100%); transition-delay: .06s; }
+  #appLoaderB.is-done .lb-curtain::before { opacity: 1; }
+  /* Hide stage during curtain to avoid flicker */
+  #appLoaderB.is-done .lb-stage,
+  #appLoaderB.is-done .lb-corner,
+  #appLoaderB.is-done .lb-grid,
+  #appLoaderB.is-done .lb-aurora { opacity: 0; transition: opacity .3s ease; }
+
+  /* Keyframes */
+  @keyframes lbGridIn   { to { opacity: 1; } }
+  @keyframes lbAuroraIn { to { opacity: 1; } }
+  @keyframes lbCornerIn { to { opacity: 1; } }
+  @keyframes lbDimIn    { to { opacity: 1; transform: none; } }
+  @keyframes lbFrameIn  {
+    0%   { transform: scale(0) rotate(0); opacity: 0; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+  .lb-frame.f2 { animation-name: lbFrameIn2; }
+  .lb-frame.f3 { animation-name: lbFrameIn3; }
+  @keyframes lbFrameIn2 {
+    0%   { transform: scale(.6); opacity: 0; }
+    100% { transform: scale(1); opacity: .7; }
+  }
+  @keyframes lbFrameIn3 {
+    0%   { transform: scale(.5); opacity: 0; }
+    100% { transform: scale(1); opacity: .4; }
+  }
+  @keyframes lbCompassSpin { to { transform: rotate(360deg); } }
+  @keyframes lbDraw { to { stroke-dashoffset: 0; } }
+  @keyframes lbFill {
+    to {
+      fill: var(--fill, #F5F1EA);
+      stroke-width: 0;
+    }
+  }
+  @keyframes lbRule { to { width: 38px; } }
+  @keyframes lbLetterIn {
+    to { opacity: 1; transform: none; filter: blur(0); }
+  }
+  @keyframes lbBulletIn { to { opacity: 1; transform: scale(1); } }
+  @keyframes lbSubIn    { to { opacity: 1; transform: none; } }
+  @keyframes lbProgIn   { to { opacity: 1; } }
+  @keyframes lbFillBar  { to { width: 100%; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    #appLoaderB *, .lbp, .lb-l, .lb-sub, .lb-fill, .lb-corner {
+      animation-duration: .1s !important;
+      animation-delay: 0s !important;
+    }
+  }
+
+  /* ============================================================
      PROJECTS — editorial bento gallery (v2)
      ============================================================ */
   .proj-section { position: relative; }
@@ -598,7 +1107,123 @@
 </style>
 </head>
 
-<body class="app-frame">
+<body class="app-frame is-loading" data-loader="a">
+
+<!-- ===== APP LOADER B — Atelier · Blueprint to Reality ===== -->
+<div id="appLoaderB" aria-hidden="true">
+  <div class="lb-grid"></div>
+  <div class="lb-aurora"></div>
+
+  <!-- Corner architectural marks -->
+  <div class="lb-corner lb-tl">
+    <span class="lb-cornerLabel">N</span>
+    <svg class="lb-compass" viewBox="0 0 40 40" width="34" height="34">
+      <line x1="20" y1="6"  x2="20" y2="34" stroke="currentColor" stroke-width="1"/>
+      <line x1="6"  y1="20" x2="34" y2="20" stroke="currentColor" stroke-width="1"/>
+      <line x1="10" y1="10" x2="30" y2="30" stroke="currentColor" stroke-width=".5" opacity=".4"/>
+      <line x1="30" y1="10" x2="10" y2="30" stroke="currentColor" stroke-width=".5" opacity=".4"/>
+      <circle cx="20" cy="20" r="2" fill="currentColor"/>
+    </svg>
+  </div>
+  <div class="lb-corner lb-tr">
+    İDEA · İNŞAAT<br/><em>atelier</em>
+  </div>
+  <div class="lb-corner lb-bl">
+    SCALE 1:50<br/><em>blueprint</em>
+  </div>
+  <div class="lb-corner lb-br">
+    <em>Bakı, AZ</em><br/>40°23′ · 49°52′
+  </div>
+
+  <!-- Center stage -->
+  <div class="lb-stage">
+
+    <!-- Top dimension callout -->
+    <div class="lb-dim lb-dim-top">
+      <span class="lb-tick"></span>
+      <span class="lb-label">12.40 M</span>
+      <span class="lb-tick"></span>
+    </div>
+
+    <!-- Logo + concentric frames -->
+    <div style="position:relative; display:flex; align-items:center; justify-content:center;">
+      <div class="lb-frames">
+        <span class="lb-frame f1"></span>
+        <span class="lb-frame f2"></span>
+        <span class="lb-frame f3"></span>
+      </div>
+      <svg class="lb-logo" viewBox="0 0 643 470" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path class="lbp p1" d="M270.129 460.068H217.063L461.038 250.542L270.129 460.068Z"/>
+        <path class="lbp p2" d="M574.941 132.349L0 460.487L64.1765 458.315L574.941 132.349Z"/>
+        <path class="lbp p3" d="M64.1328 271.06V424.804V425.073L96.2751 406.516V288.06L151.142 252.906V375.474L182.628 357.296V109.013L235.598 74.0373V326.918L266.382 309.145V53.9614L318.141 17.7307L295.212 0L151.142 92.9784V215.656L64.1328 271.06Z"/>
+        <path class="lbp p4" d="M461.034 250.539L400.945 316.488V460.068H403.302H461.034V250.539Z"/>
+        <path class="lbp p5" d="M485.223 460.487V246.377L546.353 289.086V460.487H485.223Z"/>
+        <path class="lbp p6" d="M318.141 279.86V17.7373L378.19 54.6772V245.572L318.141 279.86Z"/>
+        <path class="lbp p7" d="M464.107 110.145L404.648 70.3494V230.854L464.107 196.525V110.145Z"/>
+        <path class="lbp p8" d="M317.764 460.068V408.698L379.266 339.89V460.068H317.764Z"/>
+      </svg>
+    </div>
+
+    <!-- Bottom dimension -->
+    <div class="lb-dim lb-dim-bot">
+      <span class="lb-tick"></span>
+      <span class="lb-label">8.20 M</span>
+      <span class="lb-tick"></span>
+    </div>
+
+    <!-- Wordmark -->
+    <div class="lb-word">
+      <span class="lb-rule lb-rule-l"></span>
+      <span class="lb-letters">
+        <span class="lb-l">İ</span><span class="lb-l">D</span><span class="lb-l">E</span><span class="lb-l">A</span>
+      </span>
+      <span class="lb-bullet">·</span>
+      <span class="lb-sub">İNŞAAT</span>
+      <span class="lb-rule lb-rule-r"></span>
+    </div>
+
+    <!-- Live progress -->
+    <div class="lb-progress">
+      <span class="lb-counter" id="lbCounter">00</span>
+      <span class="lb-bar"><span class="lb-fill"></span></span>
+      <span class="lb-status" id="lbStatus">Yüklənir</span>
+    </div>
+  </div>
+
+  <!-- Curtain reveal panels -->
+  <span class="lb-curtain c1"></span>
+  <span class="lb-curtain c2"></span>
+  <span class="lb-curtain c3"></span>
+</div>
+
+<!-- ===== APP LOADER A — original construction sequence (toggle: data-loader="a") ===== -->
+<div id="appLoader" aria-hidden="true">
+  <span class="loader-tag lt-tl">İdea İnşaat</span>
+  <span class="loader-tag lt-br">Bakı, 2026</span>
+
+  <div class="loader-stage">
+    <svg class="loader-svg" viewBox="0 0 643 470" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Diagonal beams (drawn first, copper) -->
+      <path class="lp lp-beam b1" d="M270.129 460.068H217.063L461.038 250.542L270.129 460.068Z" />
+      <path class="lp lp-beam b2" d="M574.941 132.349L0 460.487L64.1765 458.315L574.941 132.349Z" />
+      <!-- Stairs / tiered structure (cream outline → fill) -->
+      <path class="lp lp-stairs" d="M64.1328 271.06V424.804V425.073L96.2751 406.516V288.06L151.142 252.906V375.474L182.628 357.296V109.013L235.598 74.0373V326.918L266.382 309.145V53.9614L318.141 17.7307L295.212 0L151.142 92.9784V215.656L64.1328 271.06Z" />
+      <!-- Columns (rise from bottom, cream) -->
+      <path class="lp lp-col c1" d="M461.034 250.539L400.945 316.488V460.068H403.302H461.034V250.539Z" />
+      <path class="lp lp-col c2" d="M485.223 460.487V246.377L546.353 289.086V460.487H485.223Z" />
+      <path class="lp lp-col c3" d="M318.141 279.86V17.7373L378.19 54.6772V245.572L318.141 279.86Z" />
+      <path class="lp lp-col c4" d="M464.107 110.145L404.648 70.3494V230.854L464.107 196.525V110.145Z" />
+      <path class="lp lp-col c5" d="M317.764 460.068V408.698L379.266 339.89V460.068H317.764Z" />
+    </svg>
+
+    <div class="loader-word" aria-label="İdea İnşaat">
+      <span class="lw-letter">İ</span><span class="lw-letter">D</span><span class="lw-letter">E</span><span class="lw-letter">A</span>
+    </div>
+    <span class="lw-sub">İnşaat</span>
+
+    <div class="loader-bar" aria-hidden="true"></div>
+  </div>
+</div>
 
 <!-- Custom cursor -->
 <div class="custom-cursor hidden lg:block" id="cursor"></div>
@@ -1622,6 +2247,51 @@
       p.classList.add('is-active');
     });
   });
+
+  // App loader — picks variation A or B based on body[data-loader]
+  (function () {
+    const variant = document.body.dataset.loader || 'b';
+    const loader = document.getElementById(variant === 'a' ? 'appLoader' : 'appLoaderB');
+    if (!loader) return;
+    const minDuration = variant === 'a' ? 2700 : 3700;
+    const startedAt = performance.now();
+
+    // Variation B — live percentage counter + status text
+    if (variant === 'b') {
+      const counter = document.getElementById('lbCounter');
+      const status  = document.getElementById('lbStatus');
+      const STATUSES = [
+        { at:   0, text: 'Yüklənir' },
+        { at:  35, text: 'Layihə açılır' },
+        { at:  70, text: 'Hazırlanır' },
+        { at:  92, text: 'Açılır' }
+      ];
+      let raf;
+      const tick = () => {
+        const t = Math.min(1, (performance.now() - startedAt) / minDuration);
+        const pct = Math.floor(t * 100);
+        if (counter) counter.textContent = String(pct).padStart(2, '0');
+        if (status) {
+          const cur = STATUSES.slice().reverse().find(s => pct >= s.at);
+          if (cur && status.textContent !== cur.text) status.textContent = cur.text;
+        }
+        if (t < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }
+
+    const dismiss = () => {
+      const elapsed = performance.now() - startedAt;
+      const remaining = Math.max(0, minDuration - elapsed);
+      setTimeout(() => {
+        loader.classList.add('is-done');
+        document.body.classList.remove('is-loading');
+        setTimeout(() => loader.remove(), 1800);
+      }, remaining);
+    };
+    if (document.readyState === 'complete') dismiss();
+    else window.addEventListener('load', dismiss, { once: true });
+  })();
 
   // Services horizontal scroll buttons
   const scroller = document.getElementById('servicesScroll');
