@@ -1,0 +1,271 @@
+{
+  "Meta": {
+    "title": "İdea İnşaat — Xəyalınızı reallığa çeviririk",
+    "description": "Bakıda 2026-cı ildən açar təhvil tikinti, interyer dizayn, mebel və landşaft xidmətləri."
+  },
+  "Nav": {
+    "services": "Xidmətlər",
+    "process": "Proses",
+    "projects": "Layihələr",
+    "reviews": "Rəylər",
+    "contact": "Əlaqə",
+    "consultation": "Konsultasiya",
+    "openMenu": "Menyunu aç",
+    "close": "Bağla",
+    "phone": "+994 50 555 04 15",
+    "email": "salam@ideainsaat.az"
+  },
+  "Hero": {
+    "metaCity": "Bakı · 2026 — bu gün",
+    "metaCityShort": "Bakı · 2026+",
+    "projectsCount": "442+ layihə",
+    "headline1": "Xəyalınızı",
+    "headline2": "reallığa",
+    "headline3": "çeviririk",
+    "badge": "Mərdəkan Villa · 2025",
+    "inputPlaceholder": "Layihənizi bir cümlə ilə təsvir edin...",
+    "inputPlaceholderShort": "Layihənizi təsvir edin...",
+    "send": "Göndər",
+    "quote": "Dizayndan açar təhvilə qədər — tək bir komanda, tək bir məsuliyyət. Hər detalı incəliklə həyata keçiririk.",
+    "mobileQuote": "Dizayndan açar təhvilə qədər, tək bir komanda — hər detalı incəliklə həyata keçiririk.",
+    "mobileBadgeRegion": "Mərdəkan · 2025",
+    "mobileBadgeName": "Villa Ay",
+    "scrollHint": "Aşağı sürüşdür",
+    "stat1": "il təcrübə",
+    "stat2": "layihə",
+    "stat3": "müştəri",
+    "pills": {
+      "design": "Dizayn",
+      "construction": "Tikinti",
+      "furniture": "Mebel",
+      "exterior": "Eksteryer",
+      "landscape": "Landşaft"
+    }
+  },
+  "About": {
+    "eyebrow": "Biz kimik",
+    "headlineMobile1": "Sizin üçün",
+    "headlineMobile2": "mükəmməllik",
+    "headlineDesktop1": "Sizin üçün dizayn edilmiş",
+    "headlineDesktop2": "mükəmməllik",
+    "bodyMobile": "35 nəfərlik multidissiplinar bir komanda — memar, mühəndis, dizayner və mebel ustaları. Hər detalı incəliklə işləyirik.",
+    "bodyDesktop": "Kiçik bir dizayn studiyasından başlayan hekayəmiz bu gün memar, mühəndis, dizayner və mebel ustalarından ibarət 35 nəfərlik multidissiplinar bir komanda ilə davam edir. Hər bir detalı incəliklə işləyirik — təhvil verdiyimiz hər layihə, arxasında qürurla durduğumuz bir sənət əsəridir.",
+    "cta": "Portfoliomuza bax",
+    "imageInterior": "İnteryer",
+    "imageExterior": "Eksteryer",
+    "altInterior": "İdea İnşaat villa interior",
+    "altExterior": "İdea İnşaat villa exterior"
+  },
+  "Services": {
+    "eyebrow": "Xidmətlərimiz",
+    "headline1": "Beş xidmət,",
+    "headline2": "bir komanda",
+    "back": "Geri",
+    "next": "İrəli",
+    "items": {
+      "design": {
+        "title": "İnteryer Dizayn",
+        "desc": "Konseptdən 3D vizualizasiyaya — hər detalı həyat tərzinə uyğun."
+      },
+      "construction": {
+        "title": "Tikinti İşləri",
+        "desc": "Açar təhvil tikinti, kapital təmir və rekonstruksiya."
+      },
+      "furniture": {
+        "title": "Mebel İstehsalı",
+        "desc": "Öz sexdə layihəyə uyğun ölçülü mebel — mətbəx, otaq, ofis."
+      },
+      "exterior": {
+        "title": "Fasad və Eksteryer",
+        "desc": "Fasad üzləmə və memarlıq elementləri — klassikdən minimalizmə."
+      },
+      "landscape": {
+        "title": "Landşaft Dizayn",
+        "desc": "Həyət, hovuz, bağ və yaşıllaşdırma — evə qədər davam edən estetika."
+      }
+    }
+  },
+  "Process": {
+    "eyebrow": "Necə işləyirik",
+    "headline1": "Dörd mərhələ.",
+    "headline2": "Qüsursuz",
+    "headline3": "icra.",
+    "subtitle": "Hər layihə xəyalınızdakı məkanı anlamaqla başlayır, açar təhvili ilə bitir.",
+    "steps": {
+      "discover": {
+        "title": "Kəşf",
+        "desc": "İstəklərinizi, həyat tərzinizi və məkanın potensialını dərindən analiz edirik."
+      },
+      "design": {
+        "title": "Layihələndirmə",
+        "desc": "3D vizualizasiya və dəqiq büdcə smetası. İdeyaları real konsepsiyaya çeviririk."
+      },
+      "build": {
+        "title": "İnşa etmək",
+        "desc": "Mütəmadi hesabatlar və tam şəffaflıq. Siz rahatlığınıza baxarkən, biz prosesi idarə edirik."
+      },
+      "deliver": {
+        "title": "Təhvil",
+        "desc": "Məkanınız yaşamağa hazırdır. 2 illik rəsmi zəmanət və ömürlük texniki dəstəyimizlə yanınızdayıq."
+      }
+    }
+  },
+  "WhyUs": {
+    "eyebrow": "Niyə biz?",
+    "headline1": "13 il. 442 layihə.",
+    "headline2": "Sıfır",
+    "headline3": "şikayət.",
+    "subtitle": "35 nəfərlik komanda. Tək bir müqavilə. 2 il yazılı zəmanət.",
+    "ctaPrimary": "Pulsuz konsultasiya",
+    "ctaSecondary": "Layihələrə bax"
+  },
+  "Projects": {
+    "eyebrow": "Seçilmiş layihələr",
+    "side": "06 / portfolio",
+    "headline1": "442 layihə.",
+    "headline2": "Hər biri ayrı bir hekayə.",
+    "deckBefore": "Mərdəkan villasından Port Baku interyerinə — material, işıq və proporsiya ilə qurulan ",
+    "deckEm": "açar təhvili",
+    "deckAfter": " işlərdən bir seçim.",
+    "ctaArchive": "Bütün arxiv",
+    "ctaCount": "442 layihə",
+    "categories": {
+      "villaInterior": "Villa · İnteryer",
+      "apartment": "Mənzil",
+      "restaurant": "Restoran",
+      "office": "Ofis",
+      "villa": "Villa"
+    },
+    "items": {
+      "merdekan": {
+        "title": "Mərdəkan",
+        "italic": "Villa",
+        "feat": "Seçilmiş · 2025",
+        "alt": "Mərdəkan Villa — 480 m² müasir villa, 2025",
+        "aria": "Mərdəkan Villa layihəsinə bax",
+        "location": "Mərdəkan, Bakı",
+        "size": "480 m²",
+        "duration": "8 ay",
+        "year": "2025"
+      },
+      "portbaku": {
+        "title": "Port Baku",
+        "italic": "Residence",
+        "alt": "Port Baku Residence — 210 m² mənzil, 2024",
+        "aria": "Port Baku Residence layihəsinə bax",
+        "location": "Bayıl",
+        "size": "210 m²",
+        "year": "2024"
+      },
+      "restaurant": {
+        "title": "Şəhər",
+        "italic": "Restoranı",
+        "alt": "Şəhər Restoranı — 320 m² kommersiya interyer, 2024",
+        "aria": "Şəhər Restoranı layihəsinə bax",
+        "location": "Səbail",
+        "size": "320 m²",
+        "year": "2024"
+      },
+      "crescent": {
+        "title": "Crescent",
+        "italic": "Ofis",
+        "alt": "Crescent Ofis — 860 m² korporativ interyer, 2023",
+        "aria": "Crescent Ofis layihəsinə bax",
+        "location": "Səbail",
+        "size": "860 m²",
+        "year": "2023"
+      },
+      "whitecity": {
+        "title": "White City",
+        "italic": "Residence",
+        "alt": "White City Residence — 145 m² mənzil, 2023",
+        "aria": "White City Residence layihəsinə bax",
+        "location": "Yasamal",
+        "size": "145 m²",
+        "year": "2023"
+      },
+      "bilgah": {
+        "title": "Bilgəh",
+        "italic": "Villa",
+        "alt": "Bilgəh Villa — 620 m² müasir villa, 2023",
+        "aria": "Bilgəh Villa layihəsinə bax",
+        "location": "Bilgəh",
+        "size": "620 m²",
+        "year": "2023"
+      }
+    }
+  },
+  "Testimonial": {
+    "eyebrow": "Müştərilərimiz",
+    "quote1": "Mən ev istəmirdim. Onlar mənə bir",
+    "quoteItalic": "səhər",
+    "quote2": "verdilər — pəncərədən düşən ilk işıqla birlikdə.",
+    "authorName": "Lalə Məmmədova",
+    "authorRole": "Villa sahibi · Mərdəkan, 2024",
+    "previous": "Əvvəlki",
+    "next": "Növbəti"
+  },
+  "Contact": {
+    "eyebrow": "Gəl, tanış olaq",
+    "headline1": "Sənin layihənin",
+    "headline2": "ilk günü",
+    "headline3": "—",
+    "headline4": "bu gün ola bilər.",
+    "body": "Pulsuz 30 dəqiqəlik konsultasiyaya yaz. Məkanı, büdcəni, xəyalını danış — biz qalanına baxarıq.",
+    "address": "Bakı, Nizami küç. 203",
+    "form": {
+      "name": "Adın",
+      "namePlaceholder": "Fuad Bağıyev",
+      "phone": "Telefon",
+      "phonePlaceholder": "+994 __ ___ __ __",
+      "service": "Xidmət",
+      "about": "Layihə haqqında",
+      "aboutPlaceholder": "Məkanın ölçüsü, tipi, xəyalın...",
+      "services": {
+        "design": "Dizayn",
+        "construction": "Tikinti",
+        "furniture": "Mebel",
+        "exterior": "Eksteryer",
+        "landscape": "Landşaft",
+        "unsure": "Hələ bilmirəm"
+      },
+      "submit": "Sorğu göndər",
+      "callbackNote": "24 saat ərzində zəng edirik."
+    }
+  },
+  "Footer": {
+    "tagline": "Bakıda 2026-cı ildən. Dizayn, tikinti, mebel, eksteryer və landşaft — bir komanda altında.",
+    "servicesHeading": "Xidmətlər",
+    "companyHeading": "Şirkət",
+    "services": {
+      "design": "Dizayn",
+      "construction": "Tikinti",
+      "furniture": "Mebel",
+      "exterior": "Eksteryer",
+      "landscape": "Landşaft"
+    },
+    "company": {
+      "about": "Haqqımızda",
+      "projects": "Layihələr",
+      "career": "Karyera",
+      "contact": "Əlaqə"
+    },
+    "copyright": "© 2026 İdea İnşaat MMC. Bütün hüquqlar qorunur."
+  },
+  "StickyCta": {
+    "call": "Zəng et",
+    "consultation": "Konsultasiya"
+  },
+  "Loader": {
+    "status1": "Yüklənir",
+    "status2": "Layihə açılır",
+    "status3": "Hazırlanır",
+    "status4": "Açılır",
+    "city": "Bakı, AZ"
+  },
+  "LangSwitcher": {
+    "az": "AZ",
+    "ru": "RU",
+    "label": "Dili dəyişdir"
+  }
+}
