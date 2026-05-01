@@ -10,8 +10,11 @@ const nextConfig = {
       { protocol: 'https', hostname: 'i.pravatar.cc' },
     ],
   },
-  experimental: {
-    nodeMiddleware: true,
+  async redirects() {
+    return [
+      { source: '/', destination: '/az', permanent: false },
+      { source: '/brief', destination: '/az/brief', permanent: false },
+    ];
   },
 };
 
