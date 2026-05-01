@@ -10,6 +10,9 @@ const nextConfig = {
       { protocol: 'https', hostname: 'i.pravatar.cc' },
     ],
   },
+  experimental: {
+    nodeMiddleware: true,
+  },
 };
 
 export default withNextIntl(nextConfig);
