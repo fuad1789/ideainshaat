@@ -12,7 +12,7 @@
     "consultation": "Konsultasiya",
     "openMenu": "Menyunu aç",
     "close": "Bağla",
-    "phone": "+994 50 555 04 15",
+    "phone": "+994 994 00 08 88",
     "email": "salam@ideainsaat.az"
   },
   "Hero": {
@@ -35,11 +35,11 @@
     "stat2": "layihə",
     "stat3": "müştəri",
     "pills": {
-      "design": "Dizayn",
+      "design": "İnteryer",
       "construction": "Tikinti",
       "furniture": "Mebel",
       "exterior": "Eksteryer",
-      "landscape": "Landşaft"
+      "landscape": "Təmizlik"
     }
   },
   "About": {
@@ -58,30 +58,30 @@
   },
   "Services": {
     "eyebrow": "Xidmətlərimiz",
-    "headline1": "Beş xidmət,",
-    "headline2": "bir komanda",
+    "headline1": "5 əsas",
+    "headline2": "xidmət",
     "back": "Geri",
     "next": "İrəli",
     "items": {
       "design": {
-        "title": "İnteryer Dizayn",
+        "title": "İnteryer dizayn",
         "desc": "Konseptdən 3D vizualizasiyaya — hər detalı həyat tərzinə uyğun."
       },
-      "construction": {
-        "title": "Tikinti İşləri",
-        "desc": "Açar təhvil tikinti, kapital təmir və rekonstruksiya."
-      },
-      "furniture": {
-        "title": "Mebel İstehsalı",
-        "desc": "Öz sexdə layihəyə uyğun ölçülü mebel — mətbəx, otaq, ofis."
-      },
       "exterior": {
-        "title": "Fasad və Eksteryer",
+        "title": "Eksteryer dizayn",
         "desc": "Fasad üzləmə və memarlıq elementləri — klassikdən minimalizmə."
       },
+      "furniture": {
+        "title": "Mebel",
+        "desc": "Öz sexdə layihəyə uyğun ölçülü mebel — mətbəx, otaq, ofis."
+      },
       "landscape": {
-        "title": "Landşaft Dizayn",
-        "desc": "Həyət, hovuz, bağ və yaşıllaşdırma — evə qədər davam edən estetika."
+        "title": "Təmizlik",
+        "desc": "Tikinti sonrası və ümumi təmizlik xidməti — açar təhvil hazır."
+      },
+      "construction": {
+        "title": "Tikinti",
+        "desc": "Açar təhvil tikinti, kapital təmir və rekonstruksiya."
       }
     }
   },
@@ -112,86 +112,112 @@
   },
   "WhyUs": {
     "eyebrow": "Niyə biz?",
-    "headline1": "13 il. 442 layihə.",
-    "headline2": "Sıfır",
-    "headline3": "şikayət.",
-    "subtitle": "35 nəfərlik komanda. Tək bir müqavilə. 2 il yazılı zəmanət.",
+    "headline1": "15 il. 450+ layihə.",
+    "headline2": "Şikayət",
+    "headline3": "yoxdur.",
+    "subtitle": "Tək bir müqavilə. Zəmanət: tikinti 15 il, təmir 5 il.",
     "ctaPrimary": "Pulsuz konsultasiya",
-    "ctaSecondary": "Layihələrə bax"
+    "ctaSecondary": "Layihələrə bax",
+    "stats": {
+      "experienceLabel": "Təcrübə",
+      "experienceValue": "15",
+      "experienceSuffix": "il",
+      "experienceSub": "fasiləsiz iş",
+      "projectsLabel": "Layihə",
+      "projectsValue": "450",
+      "projectsSuffix": "+",
+      "projectsSub": "tamamlanmış",
+      "complaintsLabel": "Şikayət",
+      "complaintsValue": "0",
+      "complaintsSuffix": "",
+      "complaintsSub": "qayıdış / iddia",
+      "contractLabel": "Müqavilə",
+      "contractValue": "1",
+      "contractSuffix": "",
+      "contractSub": "tək sənəd, açar təhvil",
+      "warrantyLabel": "Zəmanət",
+      "warrantyValue": "15",
+      "warrantySuffix": "/ 5",
+      "warrantySub": "tikinti / təmir, il"
+    }
   },
   "Projects": {
     "eyebrow": "Seçilmiş layihələr",
     "side": "06 / portfolio",
-    "headline1": "442 layihə.",
+    "headline1": "450+ layihə.",
     "headline2": "Hər biri ayrı bir hekayə.",
-    "deckBefore": "Mərdəkan villasından Port Baku interyerinə — material, işıq və proporsiya ilə qurulan ",
+    "deckBefore": "Röyal Park villasından İzmir Residence interyerinə — material, işıq və proporsiya ilə qurulan ",
     "deckEm": "açar təhvili",
     "deckAfter": " işlərdən bir seçim.",
     "ctaArchive": "Bütün arxiv",
-    "ctaCount": "442 layihə",
+    "ctaCount": "450+ layihə",
     "categories": {
-      "villaInterior": "Villa · İnteryer",
       "apartment": "Mənzil",
       "restaurant": "Restoran",
-      "office": "Ofis",
       "villa": "Villa"
     },
     "items": {
-      "merdekan": {
-        "title": "Mərdəkan",
+      "gence": {
+        "title": "Gəncə",
         "italic": "Villa",
         "feat": "Seçilmiş · 2025",
-        "alt": "Mərdəkan Villa — 480 m² müasir villa, 2025",
-        "aria": "Mərdəkan Villa layihəsinə bax",
-        "location": "Mərdəkan, Bakı",
-        "size": "480 m²",
-        "duration": "8 ay",
+        "alt": "Gəncə Villa — müasir eksteryer layihəsi, 2025",
+        "aria": "Gəncə Villa layihəsinə bax",
+        "location": "Gəncə",
+        "size": "420 m²",
+        "duration": "10 ay",
         "year": "2025"
       },
-      "portbaku": {
-        "title": "Port Baku",
-        "italic": "Residence",
-        "alt": "Port Baku Residence — 210 m² mənzil, 2024",
-        "aria": "Port Baku Residence layihəsinə bax",
-        "location": "Bayıl",
-        "size": "210 m²",
-        "year": "2024"
-      },
-      "restaurant": {
-        "title": "Şəhər",
-        "italic": "Restoranı",
-        "alt": "Şəhər Restoranı — 320 m² kommersiya interyer, 2024",
-        "aria": "Şəhər Restoranı layihəsinə bax",
-        "location": "Səbail",
-        "size": "320 m²",
-        "year": "2024"
-      },
-      "crescent": {
-        "title": "Crescent",
-        "italic": "Ofis",
-        "alt": "Crescent Ofis — 860 m² korporativ interyer, 2023",
-        "aria": "Crescent Ofis layihəsinə bax",
-        "location": "Səbail",
-        "size": "860 m²",
-        "year": "2023"
-      },
-      "whitecity": {
-        "title": "White City",
-        "italic": "Residence",
-        "alt": "White City Residence — 145 m² mənzil, 2023",
-        "aria": "White City Residence layihəsinə bax",
-        "location": "Yasamal",
-        "size": "145 m²",
-        "year": "2023"
-      },
-      "bilgah": {
-        "title": "Bilgəh",
+      "royalpark": {
+        "title": "Röyal Park",
         "italic": "Villa",
-        "alt": "Bilgəh Villa — 620 m² müasir villa, 2023",
-        "aria": "Bilgəh Villa layihəsinə bax",
-        "location": "Bilgəh",
-        "size": "620 m²",
+        "feat": "Seçilmiş · 2026",
+        "alt": "Röyal Park Villa — 300 m² müasir villa, Yasamal, 2026",
+        "aria": "Röyal Park Villa layihəsinə bax",
+        "location": "Yasamal rayonu",
+        "size": "300 m²",
+        "duration": "8 ay",
+        "year": "2026"
+      },
+      "izmir": {
+        "title": "İzmir",
+        "italic": "Residence",
+        "alt": "İzmir Residence — 183 m² mənzil, 2023",
+        "aria": "İzmir Residence layihəsinə bax",
+        "location": "İzmir",
+        "size": "183 m²",
+        "duration": "6 ay",
         "year": "2023"
+      },
+      "fevvareler": {
+        "title": "Fəvvarələr",
+        "italic": "Meydanı",
+        "alt": "Fəvvarələr Meydanı Restoranı — 93 m² kommersiya interyer, 2025",
+        "aria": "Fəvvarələr Meydanı Restoranı layihəsinə bax",
+        "location": "Fəvvarələr meydanı",
+        "size": "93 m²",
+        "duration": "5 ay",
+        "year": "2025"
+      },
+      "xirdalan": {
+        "title": "Xırdalan",
+        "italic": "Mənzil",
+        "alt": "Xırdalan mənzili — 134 m², 2024",
+        "aria": "Xırdalan mənzil layihəsinə bax",
+        "location": "Xırdalan",
+        "size": "134 m²",
+        "duration": "5 ay",
+        "year": "2024"
+      },
+      "yasamal": {
+        "title": "Yasamal",
+        "italic": "Mənzil",
+        "alt": "Yasamal mənzili — 110 m², 2025",
+        "aria": "Yasamal mənzil layihəsinə bax",
+        "location": "Yasamal",
+        "size": "110 m²",
+        "duration": "6 ay",
+        "year": "2025"
       }
     }
   },

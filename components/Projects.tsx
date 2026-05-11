@@ -1,9 +1,9 @@
 import { useTranslations } from 'next-intl';
 
 type ProjectDef = {
-  key: 'merdekan' | 'portbaku' | 'restaurant' | 'crescent' | 'whitecity' | 'bilgah';
+  key: 'gence' | 'royalpark' | 'izmir' | 'fevvareler' | 'xirdalan' | 'yasamal';
   cat: string;
-  catKey: 'villaInterior' | 'apartment' | 'restaurant' | 'office' | 'villa';
+  catKey: 'villa' | 'apartment' | 'restaurant';
   featured?: boolean;
   num: string;
   img: string;
@@ -13,58 +13,58 @@ type ProjectDef = {
 
 const PROJECT_DEFS: ProjectDef[] = [
   {
-    key: 'merdekan',
+    key: 'gence',
     cat: 'villa',
-    catKey: 'villaInterior',
+    catKey: 'villa',
     featured: true,
     num: '01 / 06',
-    img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1600&q=80',
+    img: '/imgs/exterier.jpg',
     metaKeys: ['location', 'size', 'duration', 'year'],
     span: 'span-feat',
   },
   {
-    key: 'portbaku',
-    cat: 'menzil',
-    catKey: 'apartment',
+    key: 'royalpark',
+    cat: 'villa',
+    catKey: 'villa',
     num: '02 / 06',
-    img: 'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1200&q=80',
-    metaKeys: ['location', 'size', 'year'],
+    img: '/imgs/royalpark.jfif',
+    metaKeys: ['location', 'size', 'duration', 'year'],
     span: 'span-tall',
   },
   {
-    key: 'restaurant',
-    cat: 'restoran',
-    catKey: 'restaurant',
+    key: 'izmir',
+    cat: 'menzil',
+    catKey: 'apartment',
     num: '03 / 06',
-    img: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1400&q=80',
-    metaKeys: ['location', 'size', 'year'],
+    img: '/imgs/izmirrezidens.jfif',
+    metaKeys: ['location', 'size', 'duration', 'year'],
     span: 'span-wide',
   },
   {
-    key: 'crescent',
-    cat: 'ofis',
-    catKey: 'office',
+    key: 'fevvareler',
+    cat: 'restoran',
+    catKey: 'restaurant',
     num: '04 / 06',
-    img: 'https://images.unsplash.com/photo-1604328698692-f76ea9498e76?w=1200&q=80',
-    metaKeys: ['location', 'size', 'year'],
+    img: '/imgs/fevvareler.jfif',
+    metaKeys: ['location', 'size', 'duration', 'year'],
     span: 'span-mid',
   },
   {
-    key: 'whitecity',
+    key: 'xirdalan',
     cat: 'menzil',
     catKey: 'apartment',
     num: '05 / 06',
-    img: 'https://images.unsplash.com/photo-1615529162924-f8605388461d?w=1400&q=80',
-    metaKeys: ['location', 'size', 'year'],
+    img: '/imgs/xirdalanvilla.jfif',
+    metaKeys: ['location', 'size', 'duration', 'year'],
     span: 'span-wide',
   },
   {
-    key: 'bilgah',
-    cat: 'villa',
-    catKey: 'villa',
+    key: 'yasamal',
+    cat: 'menzil',
+    catKey: 'apartment',
     num: '06 / 06',
-    img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80',
-    metaKeys: ['location', 'size', 'year'],
+    img: '/imgs/yasamavilla.jfif',
+    metaKeys: ['location', 'size', 'duration', 'year'],
     span: 'span-mid',
   },
 ];
@@ -128,17 +128,6 @@ export function Projects() {
         ))}
       </div>
 
-      <div className="mt-12 md:mt-16 flex justify-center">
-        <a href="#" className="proj-cta">
-          {t('ctaArchive')}
-          <span className="proj-cta-count">{t('ctaCount')}</span>
-          <span className="cta-arrow">
-            <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
-              <path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-            </svg>
-          </span>
-        </a>
-      </div>
     </section>
   );
 }

@@ -16,7 +16,7 @@ export function WhyUs() {
       <div className="absolute inset-0 grain opacity-30 pointer-events-none"></div>
 
       <div className="relative z-10 w-full px-5 md:px-10 text-center">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-copper mb-6 md:mb-8">
             <span className="w-6 h-px bg-copper"></span>
             {t('eyebrow')}
@@ -27,10 +27,6 @@ export function WhyUs() {
             {t('headline1')}<br />
             <span className="italic-display text-copper">{t('headline2')}</span> {t('headline3')}
           </h2>
-
-          <p className="mt-5 md:mt-7 font-display italic-display text-cream/65 text-[15px] md:text-[19px] leading-[1.55] max-w-xl mx-auto">
-            {t('subtitle')}
-          </p>
 
           <div className="mt-8 md:mt-10 flex flex-wrap items-center justify-center gap-4 md:gap-5">
             <a

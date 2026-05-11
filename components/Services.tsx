@@ -5,10 +5,10 @@ import { useTranslations } from 'next-intl';
 
 const SERVICE_KEYS = [
   { n: '01', key: 'design', img: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=900&q=80' },
-  { n: '02', key: 'construction', img: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=900&q=80' },
+  { n: '02', key: 'exterior', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80' },
   { n: '03', key: 'furniture', img: 'https://images.unsplash.com/photo-1567016432779-094069958ea5?w=900&q=80' },
-  { n: '04', key: 'exterior', img: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900&q=80' },
-  { n: '05', key: 'landscape', img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80' },
+  { n: '04', key: 'landscape', img: '/imgs/cleaning.jpg' },
+  { n: '05', key: 'construction', img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=900&q=80' },
 ] as const;
 
 export function Services() {
@@ -57,36 +57,26 @@ export function Services() {
       >
         {SERVICE_KEYS.map((s) => (
           <article key={s.n} className="md:snap-start md:shrink-0 w-full md:w-[31%] group">
-            <a href="#" className="block">
-              <div className="aspect-[4/3] md:aspect-[4/5] overflow-hidden rounded-[20px] relative bg-petrol/5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={s.img}
-                  alt={t(`items.${s.key}.title`)}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
-                />
+            <div className="aspect-[5/3] md:aspect-[4/4] overflow-hidden rounded-[20px] relative bg-petrol/5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={s.img}
+                alt={t(`items.${s.key}.title`)}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.04]"
+              />
+            </div>
+            <div className="mt-5 flex items-start gap-4">
+              <span className="font-display text-[24px] text-ink/25 leading-none tracking-tight pt-1">{s.n}</span>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-display text-[22px] md:text-[24px] text-ink leading-[1.1] transition-colors group-hover:text-copper-deep">
+                  {t(`items.${s.key}.title`)}
+                </h3>
+                <p className="mt-2 text-[13px] text-ink/55 leading-[1.55]">
+                  {t(`items.${s.key}.desc`)}
+                </p>
               </div>
-              <div className="mt-5 flex items-start gap-4">
-                <span className="font-display text-[24px] text-ink/25 leading-none tracking-tight pt-1">{s.n}</span>
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-display text-[22px] md:text-[24px] text-ink leading-[1.1]">
-                    {t(`items.${s.key}.title`)}
-                  </h3>
-                  <p className="mt-2 text-[13px] text-ink/55 leading-[1.55]">
-                    {t(`items.${s.key}.desc`)}
-                  </p>
-                </div>
-                <span
-                  aria-hidden="true"
-                  className="w-9 h-9 rounded-full border border-ink/15 flex items-center justify-center text-ink/55 group-hover:bg-ink group-hover:text-cream group-hover:border-ink transition flex-shrink-0 mt-1"
-                >
-                  <svg width="11" height="11" viewBox="0 0 16 16" fill="none">
-                    <path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                  </svg>
-                </span>
-              </div>
-            </a>
+            </div>
           </article>
         ))}
       </div>

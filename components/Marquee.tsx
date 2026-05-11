@@ -1,10 +1,11 @@
 const ITEMS = [
-  'Port Baku Residence',
-  'Crescent Mall',
-  'Mərdəkan Villalar',
-  'White City',
-  '28 Mall',
-  'Azure Residence',
+  'Röyal park',
+  'İzmir residance',
+  'Fəvvarələr meydanı',
+  'Goradil villa',
+  'Qəçrəş villa',
+  'Maştağa villa',
+  'Gəncə villa',
 ];
 
 function Track({ ariaHidden = false }: { ariaHidden?: boolean }) {

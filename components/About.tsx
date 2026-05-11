@@ -45,7 +45,7 @@ export function About() {
           <div className="relative aspect-[4/5] rounded-r-[18px] overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=600&q=80"
+              src="/imgs/interier.jpg"
               alt={t('imageInterior')}
               loading="lazy"
               className="w-full h-full object-cover"
@@ -57,7 +57,7 @@ export function About() {
           <div className="relative aspect-[4/5] rounded-l-[18px] overflow-hidden mt-5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80"
+              src="/imgs/exterier.jpg"
               alt={t('imageExterior')}
               loading="lazy"
               className="w-full h-full object-cover"
@@ -75,7 +75,7 @@ export function About() {
           <div className="relative aspect-[5/4] rounded-[22px] overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=80"
+              src="/imgs/interier.jpg"
               alt={t('altInterior')}
               loading="lazy"
               className="w-full h-full object-cover"
@@ -121,7 +121,7 @@ export function About() {
           <div className="relative aspect-[5/4] rounded-[22px] overflow-hidden">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1000&q=80"
+              src="/imgs/exterier.jpg"
               alt={t('altExterior')}
               loading="lazy"
               className="w-full h-full object-cover"

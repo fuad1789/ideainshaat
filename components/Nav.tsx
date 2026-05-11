@@ -36,7 +36,6 @@ export function Nav() {
             <a href="#xidmetler" className="link-anim hover:text-petrol">{t('services')}</a>
             <a href="#proses" className="link-anim hover:text-petrol">{t('process')}</a>
             <a href="#layiheler" className="link-anim hover:text-petrol">{t('projects')}</a>
-            <a href="#rey" className="link-anim hover:text-petrol">{t('reviews')}</a>
             <a href="#elaqe" className="link-anim hover:text-petrol">{t('contact')}</a>
           </div>
 
@@ -85,7 +84,6 @@ export function Nav() {
           <li><a href="#xidmetler" onClick={closeOverlay}>{t('services')}</a></li>
           <li><a href="#proses" onClick={closeOverlay}>{t('process')}</a></li>
           <li><a href="#layiheler" onClick={closeOverlay}>{t('projects')}</a></li>
-          <li><a href="#rey" onClick={closeOverlay}>{t('reviews')}</a></li>
           <li><a href="#elaqe" onClick={closeOverlay}>{t('contact')}</a></li>
         </ul>
         <div className="mt-10 text-cream/60 text-sm">

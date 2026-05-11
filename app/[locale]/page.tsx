@@ -9,7 +9,6 @@ import { Services } from '@/components/Services';
 import { Process } from '@/components/Process';
 import { WhyUs } from '@/components/WhyUs';
 import { Projects } from '@/components/Projects';
-import { Testimonial } from '@/components/Testimonial';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { StickyCta } from '@/components/StickyCta';
@@ -36,7 +35,6 @@ export default async function Page({
         <Process />
         <WhyUs />
         <Projects />
-        <Testimonial />
         <Contact />
         <Footer />
       </main>

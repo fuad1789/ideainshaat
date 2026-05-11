@@ -24,7 +24,7 @@ export function Hero() {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=2000&q=85"
+              src="/imgs/hero.jpeg"
               alt={t('badge')}
               className="w-full h-full object-cover"
               loading="eager"
@@ -118,7 +118,7 @@ export function Hero() {
           <figure className="m-reveal m-d3 m-hero-img relative aspect-[4/5] rounded-[28px] overflow-hidden grain bg-petrol">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=85"
+              src="/imgs/hero.jpeg"
               alt={t('badge')}
               className="w-full h-full object-cover"
               loading="eager"
