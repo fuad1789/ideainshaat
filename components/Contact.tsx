@@ -48,19 +48,35 @@ export function Contact() {
           </div>
 
           <div className="mt-8 flex gap-3">
-            <a href="#" aria-label="Instagram" className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition">
+            <a
+              href="https://instagram.com/idea_inshaat"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition"
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.6" />
                 <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.6" />
                 <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
               </svg>
             </a>
-            <a href="#" aria-label="WhatsApp" className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition">
+            <a
+              href={`https://wa.me/${tNav('phone').replace(/[^\d]/g, '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition"
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M20 4C16.1 0.1 9.9 0.1 6 4C2.1 7.9 1.4 13.9 4.2 18.6L3 22L6.6 20.9C11.3 23.5 17.1 22.6 20.9 18.8C24.7 15 24.7 8.9 20 4Z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </a>
-            <a href="#" aria-label="Facebook" className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition">
+            <a
+              href="#"
+              aria-label="Facebook"
+              className="w-11 h-11 rounded-full bg-ink text-cream flex items-center justify-center hover:bg-copper transition"
+            >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                 <path d="M14 2H17V5H14C13.4 5 13 5.4 13 6V8H17L16 12H13V22H9V12H6V8H9V6C9 3.8 10.8 2 13 2H14Z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
               </svg>
