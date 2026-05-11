@@ -169,7 +169,7 @@ export function Hero() {
 
           <div className="m-reveal m-d6 grid grid-cols-3 divide-x divide-ink/10 text-ink pt-2">
             <div className="pr-3">
-              <div className="font-display text-[28px] leading-none">13<span className="text-copper">.</span></div>
+              <div className="font-display text-[28px] leading-none">15<span className="text-copper">.</span></div>
               <div className="text-[9.5px] text-ink/55 mt-1 uppercase tracking-[0.18em]">{t('stat1')}</div>
             </div>
             <div className="px-3">
