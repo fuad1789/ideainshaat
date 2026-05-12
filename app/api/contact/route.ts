@@ -91,7 +91,6 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: `"İdea İnşaat sayt" <${user}>`,
       to,
-      replyTo: `${name} <${user}>`,
       subject,
       text,
       html,
