@@ -256,6 +256,10 @@
         "unsure": "Hələ bilmirəm"
       },
       "submit": "Sorğu göndər",
+      "sending": "Göndərilir...",
+      "success": "Təşəkkürlər! Sorğunuz qəbul olundu, tezliklə zəng edəcəyik.",
+      "errorMissing": "Zəhmət olmasa ad və telefonu doldurun.",
+      "errorGeneric": "Göndərmək alınmadı. Bir az sonra yenidən cəhd edin və ya birbaşa zəng edin.",
       "callbackNote": "24 saat ərzində zəng edirik."
     }
   },

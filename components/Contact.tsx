@@ -1,10 +1,60 @@
-import { useTranslations } from 'next-intl';
+'use client';
+
+import { useState, type FormEvent } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
 
 const SERVICE_KEYS = ['design', 'construction', 'furniture', 'exterior', 'landscape', 'unsure'] as const;
+
+type Status = 'idle' | 'sending' | 'success' | 'error';
 
 export function Contact() {
   const t = useTranslations('Contact');
   const tNav = useTranslations('Nav');
+  const locale = useLocale();
+
+  const [status, setStatus] = useState<Status>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (status === 'sending') return;
+
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const payload = {
+      name: String(data.get('name') ?? '').trim(),
+      phone: String(data.get('phone') ?? '').trim(),
+      service: String(data.get('service') ?? '').trim(),
+      about: String(data.get('about') ?? '').trim(),
+      locale,
+    };
+
+    if (!payload.name || !payload.phone) {
+      setStatus('error');
+      setErrorMessage(t('form.errorMissing'));
+      return;
+    }
+
+    setStatus('sending');
+    setErrorMessage('');
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+      if (!res.ok || !json.ok) {
+        throw new Error(json.error ?? 'send_failed');
+      }
+      setStatus('success');
+      form.reset();
+    } catch {
+      setStatus('error');
+      setErrorMessage(t('form.errorGeneric'));
+    }
+  }
 
   return (
     <section id="elaqe" className="px-5 md:px-10 py-16 md:py-28">
@@ -84,11 +134,14 @@ export function Contact() {
           </div>
         </div>
 
-        <form className="bg-cream-warm/60 rounded-3xl p-6 md:p-8 space-y-4">
+        <form onSubmit={handleSubmit} className="bg-cream-warm/60 rounded-3xl p-6 md:p-8 space-y-4">
           <div>
             <label className="text-xs uppercase tracking-[0.2em] text-muted">{t('form.name')}</label>
             <input
+              name="name"
               type="text"
+              required
+              maxLength={200}
               placeholder={t('form.namePlaceholder')}
               className="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink placeholder:text-muted/50 outline-none"
             />
@@ -96,37 +149,57 @@ export function Contact() {
           <div>
             <label className="text-xs uppercase tracking-[0.2em] text-muted">{t('form.phone')}</label>
             <input
+              name="phone"
               type="tel"
+              required
+              maxLength={50}
               placeholder={t('form.phonePlaceholder')}
               className="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink placeholder:text-muted/50 outline-none"
             />
           </div>
           <div>
             <label className="text-xs uppercase tracking-[0.2em] text-muted">{t('form.service')}</label>
-            <select className="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink outline-none">
+            <select
+              name="service"
+              defaultValue={t('form.services.design')}
+              className="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink outline-none"
+            >
               {SERVICE_KEYS.map((k) => (
-                <option key={k}>{t(`form.services.${k}`)}</option>
+                <option key={k} value={t(`form.services.${k}`)}>{t(`form.services.${k}`)}</option>
               ))}
             </select>
           </div>
           <div>
             <label className="text-xs uppercase tracking-[0.2em] text-muted">{t('form.about')}</label>
             <textarea
+              name="about"
               rows={3}
+              maxLength={4000}
               placeholder={t('form.aboutPlaceholder')}
               className="w-full mt-2 bg-transparent border-0 border-b border-ink/20 focus:border-copper focus:ring-0 py-3 text-ink placeholder:text-muted/50 outline-none resize-none"
             ></textarea>
           </div>
           <button
-            type="button"
-            className="btn-copper bg-copper text-cream w-full py-4 rounded-full text-[15px] font-medium mt-2 inline-flex items-center justify-center gap-2"
+            type="submit"
+            disabled={status === 'sending'}
+            className="btn-copper bg-copper text-cream w-full py-4 rounded-full text-[15px] font-medium mt-2 inline-flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {t('form.submit')}
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-            </svg>
+            {status === 'sending' ? t('form.sending') : t('form.submit')}
+            {status !== 'sending' && (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            )}
           </button>
-          <p className="text-xs text-muted/70 text-center">{t('form.callbackNote')}</p>
+          {status === 'success' && (
+            <p className="text-sm text-center text-copper">{t('form.success')}</p>
+          )}
+          {status === 'error' && (
+            <p className="text-sm text-center text-red-600">{errorMessage || t('form.errorGeneric')}</p>
+          )}
+          {status !== 'success' && status !== 'error' && (
+            <p className="text-xs text-muted/70 text-center">{t('form.callbackNote')}</p>
+          )}
         </form>
       </div>
     </section>
