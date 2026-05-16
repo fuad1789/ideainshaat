@@ -1,5 +1,7 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/routing';
+import { AppLoader } from '@/components/AppLoader';
+import { CustomCursor } from '@/components/CustomCursor';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { StickyCta } from '@/components/StickyCta';
@@ -47,6 +49,8 @@ export default async function ArchivePage({
 
   return (
     <>
+      <AppLoader />
+      <CustomCursor />
       <Nav />
       <main className="proj-archive">
         <div className="proj-archive-head">
