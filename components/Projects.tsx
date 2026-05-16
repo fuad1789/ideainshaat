@@ -1,133 +1,128 @@
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/routing';
+import { dbConnect } from '@/lib/mongodb';
+import { Project, type ProjectDoc } from '@/lib/models/Project';
 
-type ProjectDef = {
-  key: 'gence' | 'royalpark' | 'izmir' | 'fevvareler' | 'xirdalan' | 'yasamal';
-  cat: string;
-  catKey: 'villa' | 'apartment' | 'restaurant';
-  featured?: boolean;
-  num: string;
-  img: string;
-  metaKeys: readonly ('location' | 'size' | 'duration' | 'year')[];
-  span: 'span-feat' | 'span-tall' | 'span-wide' | 'span-mid';
+const CATEGORY_KEY: Record<string, 'villa' | 'apartment' | 'restaurant'> = {
+  villa: 'villa',
+  apartment: 'apartment',
+  restaurant: 'restaurant',
+  office: 'apartment',
+  commercial: 'apartment',
+  other: 'apartment',
 };
 
-const PROJECT_DEFS: ProjectDef[] = [
-  {
-    key: 'gence',
-    cat: 'villa',
-    catKey: 'villa',
-    featured: true,
-    num: '01 / 06',
-    img: '/imgs/exterier.jpg',
-    metaKeys: ['location', 'size', 'duration', 'year'],
-    span: 'span-feat',
-  },
-  {
-    key: 'royalpark',
-    cat: 'villa',
-    catKey: 'villa',
-    num: '02 / 06',
-    img: '/imgs/royalpark.jfif',
-    metaKeys: ['location', 'size', 'duration', 'year'],
-    span: 'span-tall',
-  },
-  {
-    key: 'izmir',
-    cat: 'menzil',
-    catKey: 'apartment',
-    num: '03 / 06',
-    img: '/imgs/izmirrezidens.jfif',
-    metaKeys: ['location', 'size', 'duration', 'year'],
-    span: 'span-wide',
-  },
-  {
-    key: 'fevvareler',
-    cat: 'restoran',
-    catKey: 'restaurant',
-    num: '04 / 06',
-    img: '/imgs/fevvareler.jfif',
-    metaKeys: ['location', 'size', 'duration', 'year'],
-    span: 'span-mid',
-  },
-  {
-    key: 'xirdalan',
-    cat: 'menzil',
-    catKey: 'apartment',
-    num: '05 / 06',
-    img: '/imgs/xirdalanvilla.jfif',
-    metaKeys: ['location', 'size', 'duration', 'year'],
-    span: 'span-wide',
-  },
-  {
-    key: 'yasamal',
-    cat: 'menzil',
-    catKey: 'apartment',
-    num: '06 / 06',
-    img: '/imgs/yasamavilla.jfif',
-    metaKeys: ['location', 'size', 'duration', 'year'],
-    span: 'span-mid',
-  },
-];
+const HOMEPAGE_LIMIT = 8;
 
-export function Projects() {
-  const t = useTranslations('Projects');
+interface ProjectsProps {
+  locale: string;
+  limit?: number;
+  showHeader?: boolean;
+  showCta?: boolean;
+}
+
+async function fetchProjects(limit: number) {
+  await dbConnect();
+  const docs = await Project.find({ published: true })
+    .sort({ order: 1, createdAt: -1 })
+    .limit(limit)
+    .lean<ProjectDoc[]>();
+  return docs;
+}
+
+export async function Projects({
+  locale,
+  limit = HOMEPAGE_LIMIT,
+  showHeader = true,
+  showCta = true,
+}: ProjectsProps) {
+  const t = await getTranslations({ locale, namespace: 'Projects' });
+  const projects = await fetchProjects(limit);
+  const lang = (locale === 'ru' ? 'ru' : 'az') as 'az' | 'ru';
+  const total = projects.length;
 
   return (
     <section id="layiheler" className="proj-section px-5 md:px-10 py-16 md:py-28">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 md:mb-16 items-end">
-        <div className="lg:col-span-7">
-          <div className="proj-eyebrow">
-            {t('eyebrow')} <span className="proj-side">{t('side')}</span>
+      {showHeader && (
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12 md:mb-16 items-end">
+          <div className="lg:col-span-7">
+            <div className="proj-eyebrow">
+              {t('eyebrow')} <span className="proj-side">{t('side')}</span>
+            </div>
+            <h2 className="font-display text-4xl md:text-6xl leading-[1.04] text-ink mt-5 max-w-3xl">
+              {t('headline1')} <br className="hidden md:block" />
+              <span className="italic-display text-petrol">{t('headline2')}</span>
+            </h2>
+            <p className="proj-deck">
+              {t('deckBefore')}<em>{t('deckEm')}</em>{t('deckAfter')}
+            </p>
           </div>
-          <h2 className="font-display text-4xl md:text-6xl leading-[1.04] text-ink mt-5 max-w-3xl">
-            {t('headline1')} <br className="hidden md:block" />
-            <span className="italic-display text-petrol">{t('headline2')}</span>
-          </h2>
-          <p className="proj-deck">
-            {t('deckBefore')}<em>{t('deckEm')}</em>{t('deckAfter')}
-          </p>
         </div>
-      </div>
+      )}
 
-      <div className="proj-bento" id="projectsGrid">
-        {PROJECT_DEFS.map((p) => (
-          <article
-            key={p.key}
-            className={`project proj-v2 ${p.featured ? 'is-featured' : ''} ${p.span}`}
-            data-cat={p.cat}
-          >
-            <div className="pv-img">
-              <span className="pv-num">{p.num}</span>
-              <span className="pv-cat">{t(`categories.${p.catKey}`)}</span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={p.img} alt={t(`items.${p.key}.alt`)} />
-              {p.featured && <span className="pv-feat">{t(`items.${p.key}.feat`)}</span>}
-            </div>
-            <div className="pv-foot">
-              <div className="pv-info">
-                <h3 className="pv-title">
-                  {t(`items.${p.key}.title`)} <span className="ti">{t(`items.${p.key}.italic`)}</span>
-                </h3>
-                <span className="pv-rule"></span>
-                <div className="pv-meta">
-                  {p.metaKeys.map((mk, j) => (
-                    <span key={mk} className="contents">
-                      <span>{t(`items.${p.key}.${mk}`)}</span>
-                      {j < p.metaKeys.length - 1 && <span className="dotsep"></span>}
-                    </span>
-                  ))}
+      {projects.length === 0 ? (
+        <div className="py-12 text-center font-italic-serif text-muted">
+          {locale === 'ru' ? 'Скоро добавим проекты…' : 'Layihələr tezliklə əlavə olunacaq…'}
+        </div>
+      ) : (
+        <div className="proj-bento" id="projectsGrid">
+          {projects.map((p, i) => {
+            const title = p.title?.[lang] || p.title?.az || '';
+            const italic = p.titleItalic?.[lang] || p.titleItalic?.az || '';
+            const num = `${String(i + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+            const catKey = CATEGORY_KEY[p.category] ?? 'apartment';
+            const meta = [p.location, p.size, p.duration, p.year].filter(Boolean);
+
+            return (
+              <article
+                key={String(p._id)}
+                className={`project proj-v2 ${p.featured ? 'is-featured' : ''}`}
+                data-cat={catKey}
+              >
+                <div className="pv-img">
+                  <span className="pv-num">{num}</span>
+                  <span className="pv-cat">{t(`categories.${catKey}`)}</span>
+                  {p.coverImage?.url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={p.coverImage.url} alt={p.coverImage.alt || title} />
+                  ) : (
+                    <div className="w-full h-full bg-cream-warm" />
+                  )}
                 </div>
-              </div>
-              <a href="#" className="pv-arrow" aria-label={t(`items.${p.key}.aria`)}>
-                <svg width={p.featured ? 16 : 14} height={p.featured ? 16 : 14} viewBox="0 0 16 16" fill="none">
-                  <path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-                </svg>
-              </a>
-            </div>
-          </article>
-        ))}
-      </div>
+                <div className="pv-foot">
+                  <div className="pv-info">
+                    <h3 className="pv-title">
+                      {title} {italic && <span className="ti">{italic}</span>}
+                    </h3>
+                    <span className="pv-rule"></span>
+                    <div className="pv-meta">
+                      {meta.map((m, j) => (
+                        <span key={`${m}-${j}`} className="contents">
+                          <span>{m}</span>
+                          {j < meta.length - 1 && <span className="dotsep"></span>}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      )}
 
+      {showCta && projects.length > 0 && (
+        <div className="mt-12 md:mt-16 flex justify-center">
+          <Link href="/layiheler" className="proj-cta-all">
+            <span>{locale === 'ru' ? 'Все проекты' : 'Bütün layihələr'}</span>
+            <span className="cta-arrow">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M2 8H14M14 8L8 2M14 8L8 14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+              </svg>
+            </span>
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

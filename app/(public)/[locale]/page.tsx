@@ -34,7 +34,7 @@ export default async function Page({
         <Services />
         <Process />
         <WhyUs />
-        <Projects />
+        <Projects locale={locale} />
         <Contact />
         <Footer />
       </main>
