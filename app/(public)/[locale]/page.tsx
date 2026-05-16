@@ -14,6 +14,8 @@ import { Footer } from '@/components/Footer';
 import { StickyCta } from '@/components/StickyCta';
 import { RevealOnScroll } from '@/components/RevealOnScroll';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Page({
   params,
 }: {
