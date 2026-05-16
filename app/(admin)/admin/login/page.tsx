@@ -2,9 +2,9 @@
 
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
-export default function AdminLoginPage() {
+function LoginInner() {
   const { status } = useSession();
   const router = useRouter();
   const params = useSearchParams();
@@ -55,5 +55,15 @@ export default function AdminLoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export const dynamic = 'force-dynamic';
+
+export default function AdminLoginPage() {
+  return (
+    <Suspense fallback={<div className="adm-login adm-login--solo" />}>
+      <LoginInner />
+    </Suspense>
   );
 }
